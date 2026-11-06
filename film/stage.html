@@ -1,0 +1,233 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#faf7f0}svg{display:block}</style></head>
+<body><div id="root"></div>
+<script>
+const INK='#1c1c1c', PAPER='#faf7f0', OR='#f28c28', BL='#7fa8d8', BLS='#d6e4f5', GR='#9a9a9a', BR='#8a5a2b';
+const R=Math.PI/180, sin=Math.sin, cos=Math.cos, clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const ease=v=>{v=clamp(v);return v*v*(3-2*v)};
+const ln=(d,w=5,c=INK,f='none')=>`<path d="${d}" fill="${f}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const circ=(x,y,r,f='none',c=INK,w=5)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" stroke="${c}" stroke-width="${w}"/>`;
+const rect=(x,y,w,h,f='none',c=INK,sw=5,r=6)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${c}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+const txt=(s,x,y,size=48,c=INK,a='middle')=>`<text x="${x}" y="${y}" font-family="'Comic Sans MS','Segoe Print','DejaVu Sans',sans-serif" font-weight="bold" font-size="${size}" fill="${c}" text-anchor="${a}">${s}</text>`;
+const G=(inner,tr='',op=1)=>`<g transform="${tr}" opacity="${op}">${inner}</g>`;
+const P=(x,y,l,a,d=1)=>[x+d*l*sin(a*R), y+l*cos(a*R)];
+
+// ================= stickman =================
+function man(o,t){
+  const {x,y,dir=1,face='happy',look=0,lookY=0,lean=0,aL=[10,5],aR=[-10,-5],lL=[5,0],lR=[-5,0],s=1.5,head=0,plain=false,op=1}=o;
+  const tx=dir*sin(lean*R), ty=-cos(lean*R);
+  const hip=[0,0], n=[90*tx,90*ty], sh=[78*tx,78*ty];
+  const hc=[n[0]+30*sin((lean+head)*R)*dir, n[1]+30*ty];
+  const limb=(p,l1,l2,a)=>{const k=P(p[0],p[1],l1,a[0],dir);const e=P(k[0],k[1],l2,a[1],dir);return [k,e]};
+  const [kL,fL]=limb(hip,55,55,lL), [kR,fR]=limb(hip,55,55,lR);
+  const [eL,hL]=limb(sh,42,40,aL), [eR,hR]=limb(sh,42,40,aR);
+  const pl=(a,b,c)=>ln(`M${a[0]},${a[1]} L${b[0]},${b[1]} L${c[0]},${c[1]}`);
+  let g=pl(hip,kL,fL)+pl(sh,eL,hL)+ln(`M0,0 L${n[0]},${n[1]}`)+pl(hip,kR,fR)+pl(sh,eR,hR);
+  g+=circ(hc[0],hc[1],27,PAPER);
+  const fx=hc[0], fy=hc[1];
+  const ex=[-10*dir+look*4*dir, 10*dir+look*4*dir].map(v=>fx+v), ey=fy-4+lookY*4;
+  const eye=i=>`<circle cx="${ex[i]}" cy="${ey}" r="3" fill="${INK}"/>`;
+  const closed=i=>`<path d="M${ex[i]-5},${ey} Q${ex[i]},${ey+5} ${ex[i]+5},${ey}" stroke="${INK}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  const flat=i=>`<path d="M${ex[i]-5},${ey} L${ex[i]+5},${ey+1}" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`;
+  const mouth=d=>`<path d="${d}" stroke="${INK}" stroke-width="3.5" fill="none" stroke-linecap="round" transform="translate(${fx},${fy})"/>`;
+  const brow=(i,a,b)=>`<path d="M${ex[i]-6},${ey-9+a} L${ex[i]+6},${ey-9+b}" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`;
+  const E=eye(0)+eye(1), C=closed(0)+closed(1);
+  const faces={
+   happy:E+mouth('M-9,8 Q0,19 9,8'), calm:E+mouth('M-7,11 Q0,15 7,11'),
+   worry:E+brow(0,3,-3)+brow(1,-3,3)+mouth('M-8,13 Q-4,8 0,12 Q4,16 8,11'),
+   guilty:E+brow(0,2,-2)+brow(1,-2,2)+mouth('M-8,14 Q0,6 8,14'),
+   puzzled:E+brow(0,0,0)+brow(1,-6,-2)+mouth('M-7,12 L7,9'),
+   curious:E+mouth('M-5,11 Q0,14 5,11'),
+   closed:C+mouth('M-7,10 Q0,16 7,10'), relief:C+mouth('M-9,8 Q0,19 9,8'),
+   wince:C+brow(0,3,-3)+brow(1,-3,3)+mouth('M-9,13 L-5,9 L-1,13 L3,9 L7,13'),
+   surprised:`<circle cx="${ex[0]}" cy="${ey}" r="4" fill="none" stroke="${INK}" stroke-width="2.5"/><circle cx="${ex[1]}" cy="${ey}" r="4" fill="none" stroke="${INK}" stroke-width="2.5"/>`+mouth('M-4,13 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0')+'',
+   tired:flat(0)+flat(1)+mouth('M-7,13 L7,13'), amused:E+mouth('M-8,11 Q3,17 9,7'),
+   focus:E+brow(0,1,1)+brow(1,1,1)+mouth('M-6,12 L6,12'), sheepish:E+brow(0,2,-2)+brow(1,-2,2)+mouth('M-8,10 Q0,17 8,9'),
+   smile:E+mouth('M-7,9 Q0,16 7,9')
+  };
+  g+=faces[face]||faces.calm;
+  if(!plain){
+    const sw=sin(t*3)*6;
+    g+=ln(`M${n[0]-15*cos(lean*R)*dir},${n[1]-15*sin(lean*R)} L${n[0]+15*cos(lean*R)*dir},${n[1]+15*sin(lean*R)}`,12,OR);
+    g+=ln(`M${n[0]-8*dir},${n[1]+4} q${-26*dir},${14+sw} ${-46*dir},${6+sw*1.5}`,9,OR);
+  }
+  man.hand=[x+hL[0]*s,y+hL[1]*s]; man.handR=[x+hR[0]*s,y+hR[1]*s]; man.head=[x+hc[0]*s,y+hc[1]*s];
+  return `<g transform="translate(${x},${y}) scale(${s})" opacity="${op}">${g}</g>`;
+}
+const SITO={lL:[88,4],lR:[84,4],aL:[40,100],aR:[20,60],lean:-5};
+const sit=(cx,o,t,couchOn=true,k=1.5)=>(couchOn?couch(cx-87*k,500,k):'')+man({x:cx,y:500,s:k,...SITO,...o},t);
+const st=(x,o,t)=>man({x,y:500,s:1.5,lL:[10,5],lR:[-10,-5],...o},t);
+
+// ================= props =================
+const chair=(x,d)=>ln(`M${x-d*34},504 L${x+d*80},504 M${x-d*34},504 L${x-d*34},420 M${x-d*28},504 L${x-d*28},580 M${x+d*74},504 L${x+d*74},580`,5);
+const csit=(x,d,o,t)=>chair(x,d)+man({x,y:500,s:1.4,dir:d,plain:true,...SITO,...o},t);
+const deskL=(x1,x2)=>ln(`M${x1},470 L${x2},470 M${x1+20},470 L${x1+20},580 M${x2-20},470 L${x2-20},580`,6);
+function couch(x,y,k=1.5,fill=BLS){const w=300*k,h=52*k,b=50*k;
+  return rect(x,y,w,h,fill,INK,5,14)+rect(x,y-105*k,b,157*k,fill,INK,5,16)+rect(x+w-56*k,y-34*k,56*k,86*k,fill,INK,5,16)
+   +ln(`M${x+22},${y+h} l0,14 M${x+w-22},${y+h} l0,14`,5);}
+const tv=(x,y,w=230,h=140)=>rect(x,y,w,h,'none',INK,5,8)+ln(`M${x+w/2-34},${y+h+22} L${x+w/2+34},${y+h+22} M${x+w/2},${y+h} L${x+w/2},${y+h+22}`,5);
+const remote=(x,y,rot=0)=>`<g transform="translate(${x},${y}) rotate(${rot})">${rect(-6,-20,12,40,PAPER,INK,3.5,3)}<circle cx="0" cy="-10" r="2" fill="${OR}"/></g>`;
+const mug=(x,y,sc=1,col=OR,sw=4.5)=>`<g transform="translate(${x},${y}) scale(${sc})">${rect(-22,-40,44,44,col,INK,sw,6)}${ln('M22,-30 q18,0 18,14 q0,14 -18,14',sw)}</g>`;
+function rays(cx,cy,r1,r2,n,t,c=OR,a0=0,span=360){let s='';const pul=1+0.25*sin(t*9);
+  for(let i=0;i<n;i++){const a=(a0+span*i/n)*R;s+=ln(`M${cx+cos(a)*r1},${cy+sin(a)*r1} L${cx+cos(a)*r2*pul},${cy+sin(a)*r2*pul}`,5,c);}return s;}
+const phone=(x,y,col=OR)=>rect(x,y,70,120,PAPER,INK,5,12)+rect(x+12,y+30,46,32,col,INK,3.5,4)+ln(`M${x+12},${y+32} L${x+35},${y+50} L${x+58},${y+32}`,3.5);
+const box=(x,y,w=130,h=110,f='#ead9bd')=>rect(x,y,w,h,f,INK,5,4)+ln(`M${x+w/2},${y} L${x+w/2},${y+h/2.2} M${x+w/2-14},${y} L${x+w/2+14},${y}`,4);
+const door=(x,y,w=150,h=260,f='none')=>rect(x,y,w,h,f,INK,5,4)+circ(x+w-25,y+h/2+10,6,INK,INK,2);
+const counter=(x,y,w=300)=>ln(`M${x},${y} L${x+w},${y}`,5)+rect(x+10,y,w-20,90,'none',INK,5,3);
+const cloud=(x,y,sc=1)=>`<g transform="translate(${x},${y}) scale(${sc})">`+ln('M-34,14 q-22,-2 -18,-20 q4,-18 24,-12 q8,-24 34,-14 q22,2 20,20 q22,2 14,22 q-4,12 -20,10 Z',4.5,INK,BL)+`</g>`;
+function clock(x,y,r=62,hands=true,col=INK){let tk='';for(let i=0;i<12;i++){const a=i*30*R;tk+=ln(`M${x+sin(a)*(r-10)},${y-cos(a)*(r-10)} L${x+sin(a)*(r-4)},${y-cos(a)*(r-4)}`,3,col)}
+  const ha=(9+40/60)*30*R, ma=240*R;
+  return circ(x,y,r,PAPER,col)+tk+ln(`M${x},${y} L${x+sin(ha)*(r-26)},${y-cos(ha)*(r-26)}`,5,col)+ln(`M${x},${y} L${x+sin(ma)*(r-12)},${y-cos(ma)*(r-12)}`,4.5,OR)+circ(x,y,4,col);}
+const bulb=(x,y,t)=>circ(x,y,38,OR)+rect(x-16,y+36,32,26,PAPER,INK,5,4)+ln(`M${x-10},${y+70} L${x+10},${y+70}`,5)+rays(x,y,50,70,8,t,OR);
+const heart=(x,y,s=1,f=OR,w=4)=>`<path transform="translate(${x},${y}) scale(${s})" d="M0,14 C-34,-8 -20,-34 0,-16 C20,-34 34,-8 0,14 Z" fill="${f}" stroke="${INK}" stroke-width="${w/s}" stroke-linejoin="round"/>`;
+const moon=(x,y,r=26)=>ln(`M${x},${y-r} A${r},${r} 0 1,0 ${x},${y+r} A${r*0.7},${r*0.7} 0 1,1 ${x},${y-r} Z`,4,INK,BL);
+const sun=(x,y,t,r=24)=>circ(x,y,r,OR)+rays(x,y,r+8,r+26,8,t*0.5,OR);
+const sink=(x,y,w=340)=>ln(`M${x},${y} L${x+w},${y}`,5)+rect(x+10,y,w-20,200,'none',INK,5,3)+ln(`M${x+60},${y} L${x+60},${y-66} Q${x+60},${y-86} ${x+85},${y-86} L${x+105},${y-86}`,6);
+const thought=(cx,cy,rx,ry,tx,ty,inner='')=>{let s=`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${PAPER}" stroke="${INK}" stroke-width="4.5"/>`;
+  for(let i=1;i<=3;i++){const f=i/4;s+=circ(cx+(tx-cx)*(0.35+0.2*i)*1,cy+ry+(ty-cy-ry)*(i/3.2),10-i*2.2,PAPER,INK,3.5)}return s+inner;};
+const speech=(x,y,w,h,tx,ty,f=PAPER,c=INK)=>rect(x,y,w,h,f,c,4.5,16)+ln(`M${x+30},${y+h} L${tx},${ty} L${x+62},${y+h}`,4.5,c,f);
+const scribbles=(x,y,n=4,col=OR,w=60)=>{let s='';for(let i=0;i<n;i++){s+=ln(`M${x},${y+i*16} q${w*0.2},-8 ${w*0.4},0 t${w*0.3},0 t${w*0.2},-2`,3.5,col)}return s;};
+const browser=(x,y,w,h)=>rect(x,y,w,h,PAPER,INK,5,10)+ln(`M${x},${y+44} L${x+w},${y+44}`,4);
+const tabShape=(x,y,w=76,h=34,col=PAPER,icon=0,strokeCol=INK)=>rect(x,y,w,h,col,strokeCol,4,8)+(icon===1?mug(x+w/2-4,y+h-8,0.4,PAPER,3):icon===2?rect(x+w/2-9,y+8,18,14,PAPER,INK,3,2):icon===3?box(x+w/2-10,y+9,20,17,PAPER):'');
+const timer=(x,y,r,label,t,ring=false,lc=OR)=>{const sh=ring?sin(t*30)*3:0;return `<g transform="translate(${x+sh},${y})">`+circ(0,0,r,PAPER)+rect(-9,-r-12,18,12,INK,INK,2,3)+(ring?rays(0,0,r+10,r+28,10,t,OR,-150,120):'')+txt(label,0,r*0.22,r*0.62,lc)+`</g>`};
+const numcircle=(n,x=110,y=130)=>circ(x,y,34,PAPER)+txt(n,x,y+14,40,OR);
+const bars=(x,y,list)=>{let s=ln(`M${x-20},${y} L${x+list.length*150+10},${y}`,5);list.forEach((b,i)=>{s+=rect(x+i*150+10,y-b.h,90,b.h,b.c,INK,5,4)});return s;};
+const hourglass=(x,y,s=1)=>`<g transform="translate(${x},${y}) scale(${s})">`+ln('M-24,-34 L24,-34 L0,0 L24,34 L-24,34 L0,0 Z',4.5,INK,PAPER)+ln('M-12,26 L12,26',4)+`</g>`;
+const gear=(x,y,r,rot)=>`<g transform="translate(${x},${y}) rotate(${rot})">${circ(0,0,r,PAPER)}${circ(0,0,r+9,'none',INK,12).replace('stroke-width="12"','stroke-width="12" stroke-dasharray="12 12"')}${circ(0,0,r*0.3,PAPER)}</g>`;
+const signpost=(x,y,txtL,dir=1)=>ln(`M${x},${y} L${x},${y-260}`,8)+`<g transform="translate(${x},${y-230})">${ln(`M0,0 L${dir*200},0 L${dir*230},28 L${dir*200},56 L0,56 Z`,5,INK,PAPER)}${txt(txtL,dir*95,38,28)}</g>`;
+const star=(x,y,r,f='#f4c542')=>ln(Array.from({length:10},(_,i)=>{const a=(i*36-90)*R,rr=i%2?r*0.45:r;return `${i?'L':'M'}${x+cos(a)*rr},${y+sin(a)*rr}`}).join(' ')+'Z',4,INK,f);
+const globe=(x,y,r=34)=>circ(x,y,r,BLS)+`<ellipse cx="${x}" cy="${y}" rx="${r*0.45}" ry="${r}" fill="none" stroke="${INK}" stroke-width="3"/>`+ln(`M${x-r},${y} L${x+r},${y}`,3)+ln(`M${x-r*0.8},${y+r*0.6} L${x+r*0.8},${y+r*0.6}`,3);
+const notepad=(x,y,w=70,h=90,col=BL)=>rect(x,y,w,h,col==='none'?PAPER:BLS,INK,4,5)+ln(`M${x+12},${y+24} L${x+w-12},${y+24} M${x+12},${y+44} L${x+w-12},${y+44} M${x+12},${y+64} L${x+w-12},${y+64}`,3.5);
+const checkbox=(x,y,s=40,state=0,col=INK)=>rect(x,y,s,s,PAPER,col,4,6)+(state===1?ln(`M${x+8},${y+s/2} L${x+s*0.4},${y+s-9} L${x+s-6},${y+8}`,5,col):state===2?ln(`M${x+8},${y+s/2} L${x+s-8},${y+s/2}`,5,col):'');
+const lock=(x,y)=>rect(x-12,y-6,24,20,INK,INK,2,3)+ln(`M${x-7},${y-6} v-8 a7,7 0 0,1 14,0 v8`,4);
+const arrow=(x1,y,x2,c=BL,w=7)=>ln(`M${x1},${y} L${x2},${y} M${x2-(x2>x1?1:-1)*40},${y-34} L${x2},${y} M${x2-(x2>x1?1:-1)*40},${y+34} L${x2},${y}`,w,c);
+const wavy=(x,y,w,a,col=GR,n=3)=>{let s='';for(let i=0;i<n;i++){s+=ln(`M${x},${y+i*14} q${w/4},${-a} ${w/2},0 t${w/2},0`,3,col)}return s;};
+const dotsDust=(x,y)=>[0,1,2,3,4,5].map(i=>circ(x+i*24+(i%2)*8,y-(i%3)*14,2.5,INK,INK,1)).join('');
+const heads=(cx,cy,r,col)=>circ(cx,cy,r,PAPER,col||INK,5)+ln(`M${cx},${cy+r} L${cx},${cy+r+60}`,5);
+const tinyTV=(x,y,w=90,h=56,c=INK)=>rect(x,y,w,h,PAPER,c,4,6)+ln(`M${x+w/2-14},${y+h+10} L${x+w/2+14},${y+h+10}`,4,c);
+const tinyCouch=(x,y,s=1)=>couch(x,y,s);
+const weight=(x,y,s=1)=>`<g transform="translate(${x},${y}) scale(${s})">`+ln('M-30,30 L-18,-24 L18,-24 L30,30 Z',4.5,INK,BL)+circ(0,-30,8,'none',INK,4)+`</g>`;
+const wall=(x,y,w,h)=>rect(x,y,w,h,PAPER,INK,5,10);
+
+// ================= frames =================
+let D=1; // current frame duration
+const F={
+ // ---------- scene 1 ----------
+ '1a':t=>clock(1030,260,78)+ln('M1030,338 L1030,430 M990,430 L1070,430',6)
+   +st(330,{s:1.6,face:'happy',aR:[145+sin(t*2.4)*14,170+sin(t*2.4)*22],aL:[22,12],lL:[14,8],lR:[-14,-8],lean:3},t),
+ '1b':t=>tv(900,330)+couch(200,500)+man({x:330,y:500,face:'calm',look:1,...SITO,aL:[40,100+sin(t*2)*3]},t)+remote(man.hand[0]+4,man.hand[1]-8,80),
+ '1c':t=>counter(840,420)+mug(990,420,1.7)+rays(1000,355,75,115,9,t,OR,200,140)+sit(280,{face:'worry',look:1,head:sin(t*3)*4},t),
+ '1d':t=>couch(400,500)+phone(110,320)+rays(145,380,85,120,10,t)+box(1030,440)+door(940,200)+rays(1095,495,95,130,10,t)
+   +man({x:530,y:500,face:'worry',look:sin(t*1.5),...SITO,lean:-3},t),
+ '1e':t=>couch(400,500)+cloud(560,190+sin(t*1.5)*6,1.6)+man({x:530,y:500,face:'guilty',...SITO,lean:-10,aL:[8,4],aR:[-4,2],head:5},t),
+ '1f':t=>txt('?',280,330,190,BL)+arrow(420,290,780)+bulb(940,285,t)+st(600,{y:560,s:1.2,face:'curious',lookY:-1,lean:2,aL:[14,8],aR:[-14,-8],head:-8},t).replace('translate(600,500)','translate(600,560)'),
+
+ // ---------- scene 2 ----------
+ '2a':t=>G(clock(1120,150,48),'',0.45)+G(mug(780,665,1.4,PAPER,3)+phone(900,545).replace(/stroke="#1c1c1c"/g,`stroke="${GR}"`)+box(1030,555,110,110,PAPER),'',0.55)
+   +st(250+t*75,{face:'calm',lL:[sin(t*5)*24,sin(t*5)*10],lR:[-sin(t*5)*24,-sin(t*5)*10],aL:[sin(t*5)*18,sin(t*5)*12],aR:[-sin(t*5)*18,-sin(t*5)*12],lean:3},t),
+ '2b':t=>rect(130,110,450,440,'none',GR,3,16)+rect(700,110,450,440,'none',GR,3,16)
+   +sun(280,230,t)+counter(190,430,300)+mug(340,430,1.6)+phone(850,260)+speech(950,240,150,70,980,310)+rect(1000,420,80,24,'#ead9bd',INK,4,4)+ln('M1000,432 L1080,432',3),
+ '2c':t=>door(520,230,200,320)+box(740,440,150,110)+rect(960,200,110,120,PAPER,INK,4,6)+rect(960,200,110,34,OR,INK,4,6)+txt('Tue',1015,285,40)+dotsDust(760,430)+ln('M430,550 L1150,550',4),
+ '2d':t=>mug(200,610,1.8)+rays(205,550,70,105,9,t,OR,200,140)+phone(930,330)+rays(965,390,85,120,10,t)+box(1050,500)+rays(1115,555,95,125,10,t)
+   +sit(640,{face:'wince',aL:[130,170],aR:[120,175],lean:-3},t),
+ '2e':t=>couch(60,500,1.0,PAPER)+thought(900,210,70,46,820,330,circ(900,210,5,INK,INK,1))+st(700,{y:500-Math.abs(sin(t*2))*8,face:'sheepish',lean:6,aR:[165,175],aL:[12,6]},t),
+ '2f':t=>sink(560,450)+mug(820,450,1.6)+st(430,{face:'calm',aL:[12,8],aR:[-8,-4],lean:2},t),
+ '2g':t=>sink(560,450)+mug(820,450,1.6)+st(430,{face:'relief',aL:[60,100],aR:[-8,-4],lean:2},t)
+   +[0,1,2].map(i=>{const p=(t*0.5+i/3)%1;return ln(`M${390+i*38},${380-p*110} q8,-12 0,-24`,4,BL)}).join('').replace(/stroke-width="4"/g,'stroke-width="4" opacity=".8"'),
+ '2h':t=>rect(240,330,720,300,'none',INK,5,24)+mug(600,570,4.2)+ln('M520,470 l14,-12 l12,14 l14,-12 M600,500 l12,-10 l10,12 M640,450 l14,10 l10,-12',5,BR)
+   +ln('M1280,230 L1010,240',6)+circ(990,245,16,PAPER)+ln('M950,330 L950,230 Q950,196 905,196 L860,196',7),
+ '2i':t=>couch(60,520,0.9,BLS).replace(/>/,'>')+G(couch(60,520,0.9),'',0.4)+st(600,{face:'relief',lean:0,aL:[14,8],aR:[-14,-8]},t)
+   +`<g transform="translate(0,${-t*40})">`+ln('M610,360 Q630,300 620,260',3)+circ(620,230,36,BL)+'</g>',
+ '2j':t=>counter(760,420,360)+mug(930,420,2)+thought(780,190,110,70,700,300, txt('?',780,220,80*ease(t/1.2),BL)).replace('<ellipse','<ellipse')
+   +st(520,{face:'puzzled',lean:10+ease(t/1.5)*6,aL:[30,60],aR:[-12,-6],head:ease(t/1.5)*10},t),
+
+ // ---------- scene 3 ----------
+ '3a':t=>ln('M330,520 L330,300 Q320,200 400,170 Q520,140 560,230 Q574,270 600,290 Q580,310 590,330 Q570,350 580,380 Q540,400 480,400 L480,520',6,INK,PAPER)
+   +G(rect(400,230,60,50,OR,INK,4,8)+circ(430,222,12,OR,INK,4)+circ(462,255,12,OR,INK,4),`rotate(${sin(t*2)*4} 430 255)`)+txt('Zeigarnik effect',910,350,64),
+ '3b':t=>st(300,{plain:true,face:'curious',aR:[30,95],aL:[30,90],s:1.5},t)+notepad(man.handR[0]-5,man.handR[1]-45,50,64,BLS)
+   +rect(660,130,420,420,PAPER,INK,5,12)+[0,1,2].map(i=>checkbox(700,190+i*110,52,i<2?1:0,i<2?INK:OR)+ln(`M780,${216+i*110} L1030,${216+i*110}`,5,i<2?GR:OR)).join('')+scribbles(1040,360,3,OR,28),
+ '3c':t=>heads(640,500,70)+thought(430,200,130,90,590,420,G(checkbox(395,170,64,1,GR),'',0.8))+thought(860,210,190,120,690,420,checkbox(790,150,110,2,OR)),
+ '3d':t=>{const cnt=Math.min(8,Math.floor(t*1.5)+1);let s=browser(200,160,880,460);for(let i=0;i<cnt;i++){const sl=ease(t*1.5-i);const x=230+i*100;const orng=i===2;s+=tabShape(x+(1-sl)*60,170-(1-sl)*50,92,38,orng?OR:PAPER,[1,2,3][i%3])}
+        return s+txt('www',640,330,50,GR)+ln('M300,400 L980,400 M300,450 L900,450 M300,500 L940,500',5,'#d8d2c4')},
+ '3e':t=>ln('M640,110 L640,600',4,GR)+G(tabShape(120,210,80,34,PAPER,1,GR)+tabShape(220,170,80,34,PAPER,2,GR),'',0.6)
+   +st(330,{face:'calm',aL:[110,160],aR:[100,150],lL:[sin(t*4)*22,0],lR:[-sin(t*4)*22,0],lean:8},t)+box(man.hand[0]-30,man.hand[1]-40,70,60)
+   +sit(960,{face:'wince',look:0},t,true,1.2)+tabShape(830,200,120,50,OR,1)+tabShape(1000,170,120,50,PAPER,2)+rays(960,330,110,150,12,t,OR)+tabShape(900,120,110,46,PAPER,3),
+ '3f':t=>rect(880,110,250,120,PAPER,INK,4,8)+txt('2011',1005,195,66,OR)+st(300,{plain:true,face:'curious',aL:[40,70],aR:[60,100]},t)+rect(man.handR[0]+4,man.handR[1]-22,40,50,OR,INK,3,3)+deskL(640,820)+csit(930,-1,{face:'calm',aL:[30,90],aR:[20,70]},t),
+ '3g':t=>csit(520,1,{face:'focus',aL:[30,70],aR:[30,70],lean:-3},t)+deskL(640,1000)+rect(730,430,120,40,PAPER,INK,4,3)+ln('M790,430 L790,470',3)+[0,1,2,3].map(i=>{const p=(t*0.4+i/4)%1;return `<g opacity="${1-p}">${checkbox(430+i*50,300-p*90,34,0,OR)}</g>`}).join(''),
+ '3h':t=>csit(520,1,{face:'worry',aL:[30,70],aR:[30,70],lean:-3},t)+deskL(640,1000)+rect(760,330,130,140,PAPER,INK,4,4)+[1,2].map(i=>ln(`M760,${330+i*47} L890,${330+i*47} M${760+i*43},330 L${760+i*43},470`,3)).join('')+txt('A',782,372,34)+txt('R',826,418,34)+ln('M1110,230 L1110,370 M1078,334 L1110,370 M1142,334 L1110,370',7,BL),
+ '3i':t=>mug(330,500,3.6)+txt('=',640,470,150)+tabShape(780,380,300,130,OR,1).replace(/<rect/,'<rect'),
+ '3j':t=>G(couch(380,505,1.5,PAPER),'translate(30,-12)',0.35)+sit(580,{plain:true,face:'guilty',lean:-8,aL:[10,5],aR:[0,0]},t)+weight(man.head[0]-10,430,1.2)+rect(man.head[0]-34,420,0,0)+G(couch(386,0,0.0),'',0),
+ '3k':t=>bars(300,560,[{h:140,c:PAPER},{h:300,c:OR}])+tinyTV(320,230,90,56)+circ(560,200,34,PAPER)+`<circle cx="548" cy="194" r="3" fill="${INK}"/><circle cx="572" cy="194" r="3" fill="${INK}"/>`+ln('M546,216 Q560,204 574,216',3.5)+txt('530 adults',510,630,48),
+ '3l':t=>csit(380,1,{face:'focus',aL:[30,90],aR:[20,70]},t)+csit(900,-1,{face:'guilty',aL:[30,90],aR:[20,70]},t)+thought(830,230,120,88,850,370,hourglass(830,226,1.1)),
+ '3m':t=>signpost(900,640,'Earn it',-1).replace(/Earn it/,'')+star(740,370,40)+txt('Earn it',800,449,28)+ln('M900,640 L900,380',8)+sit(380,{face:'worry',look:1,lean:-5},t,true,1.2),
+ '3n':t=>G(tabShape(0,0,230,110,OR,1)+lock(115,70),`translate(780,${180+sin(t*2)*8})`)+st(450,{face:'puzzled',aR:[165,120],aL:[10,5],lean:3,head:-6},t),
+
+ // ---------- scene 4 ----------
+ '4a':t=>ln('M120,560 L260,560 L330,540 L410,580 L490,540 L570,580 L650,540 L730,580 L810,540 L890,580 L1160,560',7,BL)
+   +st(300+t*70,{y:500-Math.abs(sin(t*3.5))*90-(120),s:0.7,face:'worry',aL:[140,160],aR:[-140,-160],lL:[30,10],lR:[-30,-10]},t).replace(/translate\((\d+\.?\d*),(-?\d+\.?\d*)\)/,(m,a,b)=>`translate(${a},${+b+170})`),
+ '4b':t=>[0,1,2].map(i=>rect(90+i*380,170,340,350,'none',GR,3,16)).join('')+arrow(432,350,458,INK,5)+arrow(812,350,838,INK,5)
+   +tinyTV(260,210,60,40)+man({x:200,y:420,s:0.7,face:'calm',lean:-3,aL:[20,30],aR:[10,20]},t)
+   +man({x:580,y:420,s:0.7,face:'focus',lean:-3,aL:[50,150],aR:[10,20]},t)+phone(man.hand[0]-10,man.hand[1]-45).replace(/<rect x="[\d.]+" y="[\d.]+" width="70" height="120"/,m=>m)
+   +man({x:960+sin(t*3)*20,y:420,s:0.7,face:'tired',lean:5,lL:[sin(t*5)*22,0],lR:[-sin(t*5)*22,0]},t),
+ '4c':t=>G(tinyTV(1020,130,120,76,GR)+wavy(1040,240,80,10,GR,3),'',0.5)+st(500,{dir:-1,face:'focus',aL:[60,120],aR:[20,40],lean:-8,head:10},t)+phone(man.hand[0]-30,man.hand[1]-40),
+ '4d':t=>door(820,230,200,330,BLS)+txt('Rest',920,300,52)+ln('M1000,420 L1010,420',3)+ln('M250,100 L250,150',6)+`<g transform="translate(250,${150+sin(t*2)*5})">`+ln('M0,0 L0,40',5)+checkbox(-26,40,52,1,INK)+ln('M0,92 L0,130 L14,130 M0,112 L12,112',5)+`</g>`
+   +st(540,{face:'guilty',aR:[165,175],aL:[10,5],lean:-3,head:-8},t),
+ '4e':t=>rect(520,150,780,70,PAPER,INK,5,14)+rect(560,220,740,360,PAPER,INK,5,6)+[0,1,2,3,4,5].map(i=>checkbox(600,250+i*54,34,i<2?1:0)+ln(`M660,${268+i*54} L${1000+i*40},${268+i*54}`,5,GR)).join('')+sit(280,{face:'tired',look:1,lean:-12,aL:[8,4],aR:[0,0]},t,true,1.2),
+ '4f':t=>ln('M80,590 L1200,590',6)+[0,1,2,3,4].map(i=>st(260+i*190,{y:410,s:0.8,plain:i>0,face:'tired',lean:8,aL:[10,0],aR:[-6,-2],lL:[6,2],lR:[-6,-2],dir:1},t).replace('translate','translate')).join('')+clock(640,180,64,true,BL),
+ '4g':t=>[0,1,2,3].map(i=>couch(40+i*290,560,0.9)+man({x:130+i*290,y:560,s:0.9,plain:i>0,op:[1,0.6,0.38,0.2][i],face:'calm',...SITO},t)).join('')+txt('?',1190,420,150,BL),
+
+ // ---------- scene 5 ----------
+ '5a':t=>wall(160,130,230,380).replace('none',PAPER)+ln('M160,130 L160,510 M390,130 L390,510',6)+rect(420,90,150,150,PAPER,INK,5,8)+moon(495,165)+counter(800,420,360)+mug(980,420,1.7)
+   +st(280,{face:'curious',look:1,lean:3,aL:[12,6],aR:[-8,-4]},t),
+ '5b':t=>G(couch(40,500,0.9),'',0.4)+counter(800,420,360)+mug(980,420,1.7)+st(560,{dir:-1,face:'calm',aR:[60+sin(t*3)*12,100],aL:[8,4],lean:2,head:sin(t*2)*4},t),
+ '5c':t=>sit(640,{face:'smile',aL:[50,120]},t)+timer(man.hand[0]+20,man.hand[1]-20,50,'3:00',t),
+ '5d':t=>sit(560,{face:'closed'},t)+timer(920,430,62,'0:30',t)+G(star(560,170,28,OR),`rotate(${t*30} 560 170)`),
+ '5e':t=>sit(560,{face:'worry',lean:12,lR:[70,30],head:4},t)+thought(870,200,170,100,720,320,scribbles(790,170,4,OR,150)),
+ '5f':t=>sit(560,{face:'smile',aR:[150+sin(t*4)*16,170]},t)+thought(900,200,150,90,780,320,scribbles(840,170,4,OR,110))+numcircle(1),
+ '5g':t=>{const p=clamp(t/D);let pts=[];for(let i=0;i<=60;i++){const q=i/60;if(q>p*1.05)break;const x=180+q*900;const y=330-170*Math.exp(-Math.pow((q-0.38)*4.2,2))*(q<0.4?1:0.995);pts.push(`${i?'L':'M'}${x},${y}`)}
+      return ln('M160,332 L1100,332',3,GR)+ln(pts.join(' '),8,OR)+sit(640,{face:'calm'},t)},
+ '5h':t=>sit(780,{face:'calm',look:-1},t)+thought(420-t*30,260,130,76,340-t*30,360,scribbles(360-t*30,230,3,OR,90)).replace(/fill="#faf7f0"/g,'fill="#faf7f0" opacity=".9"'),
+ '5i':t=>sit(420,{face:'curious',look:1},t)+counter(900,430,300)+mug(1050,430,1.6)+G(notepad(1100,230,70,90),`translate(0,${sin(t*2)*6})`)+numcircle(2),
+ '5j':t=>tabShape(220,260,170,80,OR,1)+rect(530,200,210,200,PAPER,INK,5,8)+txt('2011',635,320,54,OR)+arrow(400,300,500,OR,6)+notepad(900,230,140,170,BL)+arrow(760,300,870,OR,6),
+ '5k':t=>sit(420,{face:'focus',aL:[50,150]},t)+phone(man.hand[0]-10,man.hand[1]-48)+rect(800,150,260,420,PAPER,INK,6,26)
+   +[0,1,2,3].map(i=>ln(`M840,${230+i*55} q${20+i*6},-10 ${40+i*10},0 t${40},0 t${30},-2`,5,i===3?OR:INK)).join('')+mug(1000,540,0.9)
+   +rect(840,520,40,8,OR,OR,1,2),
+ '5l':t=>heads(380,330,120).replace(/L(\d+),(\d+)"/,'L$1,$2"')+scribbles(320,290,6,OR,120)+arrow(560,330,700,INK,6)+heads(880,330,120)+rect(830,280,100,100,OR,INK,4,6)+ln('M845,310 L915,310 M845,335 L915,335 M845,360 L890,360',4,PAPER),
+ '5m':t=>st(300,{plain:true,face:'calm',aR:[75,110],aL:[10,5],lean:2},t)+circ(620,330,18,OR,INK,4)+arrow(650,330,860,INK,6)+ln('M900,380 L900,250 L980,280 L900,310',5,INK,OR)+checkbox(520,470,60,0)+ln('M610,500 L840,500',5,GR),
+ '5n':t=>{const p=ease((t-1)/3);return sit(500,{face:p>0.6?'happy':'calm',lean:-5-p*3},t)+G(browser(820,200,300,200)+tabShape(840,208,100,34,OR,1)+txt('x',920,236,24)+ln('M850,330 L1090,330',4,GR),`translate(${970*(1-(1-p*0.0))},${300}) scale(1) translate(-970,-300)`,1-p)
+      +counter(1000,560,260).replace(/./,m=>m)+mug(1100,560,1.1)},
+ '5o':t=>sit(420,{face:'smile',lean:-5},t)+thought(840,200,150,100,640,330,man({x:790,y:285,s:0.5,plain:true,face:'happy',lL:[8,4],lR:[-8,-4],aL:[20,10],aR:[-30,-10]},t)+man({x:880,y:285,s:0.5,plain:false,face:'happy',lL:[8,4],lR:[-8,-4],aL:[100,50],aR:[-10,-5]},t))+numcircle(3),
+ '5p':t=>sit(420,{face:'smile'},t)+speech(500,130,230,120,480,290,PAPER,BL)+ln('M520,150 L710,230',9,BL)+speech(780,120,260,130,700,300,PAPER,OR)+heart(830,185,1.1)+tinyTV(880,150,90,60,OR),
+ '5q':t=>bars(300,560,[{h:300,c:'#cfcfcf'},{h:190,c:OR}])+heart(535,455,1.2)+txt('Self-compassion',640,625,46),
+ '5r':t=>{const p=ease(t/2);return heart(640,560,2.6,BL,5)+st(640,{plain:true,y:240+p*180,face:p>0.95?'smile':'surprised',s:1.0,lL:[30,10],lR:[-30,-10],aL:[150,170],aR:[-150,-170]},t).replace('translate(640,500)',`translate(640,${230+p*170})`)},
+ '5s':t=>heart(320,500,5,BLS,5)+heart(900,500,2.4,BL,5)+man({x:900,y:450,s:1.3,face:'happy',...SITO,lean:0},t),
+ '5t':t=>gear(560,360,70,t*40)+gear(730,418,50,-t*60-10)+rect(380,200,520,330,'none',INK,5,14)+(()=>{const p=(t*0.5)%1;return heart(650,150+p*160,0.8,OR,3)})(),
+ '5u':t=>sit(500,{face:'calm',aR:[120+sin(t*3)*8,160],lean:-5},t)+timer(920,470,70,'0:00',t,true)+numcircle(4),
+ '5v':t=>ln('M640,660 L640,480 L300,300 M640,480 L980,300',8,GR)+door(180,130,110,170,BLS)+door(1000,130,110,170,OR)+st(640,{y:420,s:1.2,face:'curious',lean:1},t).replace('translate(640,500)','translate(640,420)')+signpost(760,620,'?',1).replace(/\?<\/text>/,'</text>'),
+ '5w':t=>sit(540,{face:'surprised',aL:[50,120]},t)+timer(man.hand[0]+20,man.hand[1]-20,50,'0:00',t)+G(phone(780,462),'rotate(-80 815 520)'),
+ '5x':t=>door(60,230,150,300)+box(230,420,130,110)+counter(900,420,300)+mug(1040,420,1.5)+ln('M600,200 L760,200',6)+globe(680,165,30)+sit(560,{face:'calm'},t,true,1.1),
+
+ // ---------- scene 6 ----------
+ '6a':t=>F['1b'](t),
+ '6b':t=>counter(900,430,300)+mug(1050,430,1.4)+rays(1055,380,60,90,9,t,OR,200,140)+sit(380,{face:'amused',look:1},t),
+ '6c':t=>sit(420,{face:'calm',head:sin(t*2)*6},t)+G(tabShape(0,0,260,130,OR,1)+rect(150,70,90,70,BLS,INK,4,4),`translate(780,${210+sin(t*2)*8})`),
+ '6d':t=>ln('M760,640 L760,330 M640,640 L880,640',8)+G(ln('M450,320 L1070,320',8)+rect(380,350,170,16,PAPER,INK,5,4)+weight(465,320,1.5)+txt('Guilt',465,250,40)+rect(950,330,170,16,PAPER,INK,5,4)+txt('Proof',1035,310,40),`rotate(${-6+sin(t)*1} 760 320)`)+st(230,{face:'calm',aR:[30,100],aL:[30,100],lean:2},t),
+ '6e':t=>rect(100,100,1080,540,'none','#e5dfd0',3,20)+G(`<path d="M-40,40 Q-40,-50 0,-60 Q40,-50 40,40 L56,56 L-56,56 Z" fill="${OR}" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/>`+circ(0,64,10,INK,INK,2)+rays(0,0,70,100,10,t,OR,-160,140),`translate(900,300) rotate(${sin(t*28)*5})`)
+   +G(ln('M-12,10 Q-24,-18 0,-32 Q8,-14 22,-4 Q22,14 0,16 Z',4,INK,BL)+ln('M-30,-40 L30,30',5,INK),'translate(900,150)')+sit(420,{face:'calm'},t),
+ '6f':t=>{const on=ease((t-1.4)/0.6);return tv(860,300,300,180)+(on>0?`<polygon points="975,350 975,430 1045,390" fill="${OR}" stroke="${INK}" stroke-width="5" stroke-linejoin="round" opacity="${on}"/>`+rays(1010,390,90,110,12,t,OR):'')
+     +couch(200,500)+man({x:330,y:500,face:t>1.3?'happy':'calm',look:1,...SITO,aL:[40,100]},t)+remote(man.hand[0]+4,man.hand[1]-8,80)},
+ '6g':t=>couch(250,500)+rect(840,430,130,16,PAPER,INK,5,4)+ln('M860,446 L860,560 M950,446 L950,560',5)+mug(905,430,1.6)+rect(1000,110,160,160,PAPER,INK,5,8)+moon(1080,190,34)
+};
+const ZOOM={'2j':0.14,'5n':0.1,'6f':0.12,'5g':0.0};
+function draw(id,t,dur){
+  D=dur;
+  const p=t/dur, z=1+(ZOOM[id]!==undefined?ZOOM[id]:0.04)*p, fade=Math.min(1,t/0.3);
+  const seed=Math.floor(t*6)%50+1;
+  document.getElementById('root').innerHTML=
+   `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs><filter id="w"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="${seed}"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></defs>
+    <rect width="1280" height="720" fill="${PAPER}"/>
+    <g opacity="${fade}" transform="translate(0 -40) translate(640 360) scale(${z}) translate(-640 -360)"><g filter="url(#w)">${F[id](t)}</g></g></svg>`;
+}
+window.draw=draw; window.frameIds=Object.keys(F);
+</script></body></html>
