@@ -1,0 +1,12 @@
+{
+ "title": "The Mug Can Wait",
+ "scene": "The Couch and the Mug",
+ "frames": [
+  {"id":"1a","start":0,"end":7.1,"text":"It's 9:40 p.m. Sam has been waiting for this all day. One episode. That's the whole plan."},
+  {"id":"1b","start":7.1,"end":11.9,"text":"He sits down on the couch. He picks up the remote."},
+  {"id":"1c","start":11.9,"end":17.4,"text":"And from the kitchen, a dirty mug starts to feel like an emergency."},
+  {"id":"1d","start":17.4,"end":22.2,"text":"Then the unread message. Then the package by the front door."},
+  {"id":"1e","start":22.2,"end":27.7,"text":"If you've ever felt guilty for doing absolutely nothing, this one's for you."},
+  {"id":"1f","start":27.7,"end":34,"text":"By the end, you'll know why it happens, and what to do about it tonight."}
+ ]
+}

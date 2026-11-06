@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#faf7f0}svg{display:block}</style></head>
+<body><div id="root"></div>
+<script>
+const INK='#1c1c1c', PAPER='#faf7f0', OR='#f28c28', BL='#7fa8d8', BLS='#d6e4f5';
+const R=Math.PI/180;
+const ln=(d,w=5,c=INK,f='none')=>`<path d="${d}" fill="${f}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const circ=(x,y,r,f='none',c=INK,w=5)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" stroke="${c}" stroke-width="${w}"/>`;
+const rect=(x,y,w,h,f='none',c=INK,sw=5,r=6)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${c}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+const txt=(s,x,y,size=48,c=INK,a='middle')=>`<text x="${x}" y="${y}" font-family="'Comic Sans MS','Segoe Print','DejaVu Sans',sans-serif" font-weight="bold" font-size="${size}" fill="${c}" text-anchor="${a}">${s}</text>`;
+const P=(x,y,l,a,d=1)=>[x+d*l*Math.sin(a*R), y+l*Math.cos(a*R)];
+
+// ---------- stickman ----------
+function man(o,t){
+  const {x,y,dir=1,face='happy',look=0,lookY=0,lean=0,aL=[10,5],aR=[-10,-5],lL=[5,0],lR=[-5,0],s=1,head=0,hold=''}=o;
+  const tx=dir*Math.sin(lean*R), ty=-Math.cos(lean*R);       // torso direction
+  const hip=[0,0], n=[90*tx,90*ty], sh=[78*tx,78*ty];
+  const hc=[n[0]+30*Math.sin((lean+head)*R)*dir, n[1]+30*ty];
+  const limb=(p,l1,l2,a)=>{const k=P(p[0],p[1],l1,a[0],dir);const e=P(k[0],k[1],l2,a[1],dir);return [k,e]};
+  const [kL,fL]=limb(hip,55,55,lL), [kR,fR]=limb(hip,55,55,lR);
+  const [eL,hL]=limb(sh,42,40,aL), [eR,hR]=limb(sh,42,40,aR);
+  const pl=(a,b,c)=>ln(`M${a[0]},${a[1]} L${b[0]},${b[1]} L${c[0]},${c[1]}`);
+  let g=pl(hip,kL,fL)+pl(sh,eL,hL)+ln(`M0,0 L${n[0]},${n[1]}`)+pl(hip,kR,fR)+pl(sh,eR,hR);
+  // head
+  g+=circ(hc[0],hc[1],27,PAPER);
+  const fx=hc[0], fy=hc[1];
+  const ex=[-10*dir+look*4*dir, 10*dir+look*4*dir].map(v=>fx+v), ey=fy-4+lookY*4;
+  let f='';
+  const eye=(i)=>`<circle cx="${ex[i]}" cy="${ey}" r="3" fill="${INK}"/>`;
+  const closed=(i)=>`<path d="M${ex[i]-5},${ey} Q${ex[i]},${ey+5} ${ex[i]+5},${ey}" stroke="${INK}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  const mouth=(d)=>`<path d="${d}" stroke="${INK}" stroke-width="3.5" fill="none" stroke-linecap="round" transform="translate(${fx},${fy})"/>`;
+  const brow=(i,dy1,dy2)=>`<path d="M${ex[i]-6},${ey-9+dy1} L${ex[i]+6},${ey-9+dy2}" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`;
+  if(face==='happy'){f=eye(0)+eye(1)+mouth('M-9,8 Q0,19 9,8');}
+  if(face==='calm'){f=eye(0)+eye(1)+mouth('M-7,11 Q0,15 7,11');}
+  if(face==='worry'){f=eye(0)+eye(1)+brow(0,3,-3)+brow(1,-3,3)+mouth('M-8,13 Q-4,8 0,12 Q4,16 8,11');}
+  if(face==='guilty'){f=eye(0)+eye(1)+brow(0,2,-2)+brow(1,-2,2)+mouth('M-8,14 Q0,6 8,14');}
+  if(face==='puzzled'){f=eye(0)+eye(1)+brow(0,0,0)+brow(1,-6,-2)+mouth('M-7,12 L7,9');}
+  if(face==='curious'){f=eye(0)+eye(1)+mouth('M-5,11 Q0,14 5,11');}
+  g+=f;
+  // scarf (always orange)
+  const pxv=[-ty*dir, tx*dir]; // perpendicular
+  const sw=Math.sin(t*3)*6;
+  g+=ln(`M${n[0]-15*Math.cos(lean*R)*dir},${n[1]-15*Math.sin(lean*R)} L${n[0]+15*Math.cos(lean*R)*dir},${n[1]+15*Math.sin(lean*R)}`,12,OR);
+  g+=ln(`M${n[0]-8*dir},${n[1]+4} q${-26*dir},${14+sw} ${-46*dir},${6+sw*1.5}`,9,OR);
+  man.hand=[x+hL[0]*s,y+hL[1]*s];
+  return `<g transform="translate(${x},${y}) scale(${s})">${g}</g>`;
+}
+
+// ---------- props ----------
+function couch(x,y,k=1.5){const w=300*k,h=52*k,b=50*k;
+  return rect(x,y,w,h,BLS,INK,5,14)+rect(x,y-105*k,b,157*k,BLS,INK,5,16)+rect(x+w-56*k,y-34*k,56*k,86*k,BLS,INK,5,16)
+   +ln(`M${x+22},${y+h} l0,14 M${x+w-22},${y+h} l0,14`,5);
+}
+function tv(x,y,w=170,h=105){return rect(x,y,w,h,'none',INK,5,8)+ln(`M${x+w/2-30},${y+h+20} L${x+w/2+30},${y+h+20} M${x+w/2},${y+h} L${x+w/2},${y+h+20}`,5)}
+function remote(x,y,rot=0){return `<g transform="translate(${x},${y}) rotate(${rot})">${rect(-6,-20,12,40,PAPER,INK,3.5,3)}<circle cx="0" cy="-10" r="2" fill="${OR}"/></g>`}
+function mug(x,y,sc=1,col=OR){return `<g transform="translate(${x},${y}) scale(${sc})">${rect(-22,-40,44,44,col,INK,4.5,6)}${ln('M22,-30 q18,0 18,14 q0,14 -18,14',4.5)}</g>`}
+function rays(cx,cy,r1,r2,n,t,c=OR,a0=0,span=360){
+  let s='';const pul=1+0.25*Math.sin(t*9);
+  for(let i=0;i<n;i++){const a=(a0+span*i/n)*R;
+    s+=ln(`M${cx+Math.cos(a)*r1},${cy+Math.sin(a)*r1} L${cx+Math.cos(a)*r2*pul},${cy+Math.sin(a)*r2*pul}`,5,c);}
+  return s;
+}
+function phone(x,y,t){return rect(x,y,70,120,PAPER,INK,5,12)+rect(x+12,y+30,46,32,OR,INK,3.5,4)+ln(`M${x+12},${y+32} L${x+35},${y+50} L${x+58},${y+32}`,3.5)}
+function box(x,y,w=110,h=90){return rect(x,y,w,h,'#ead9bd',INK,5,4)+ln(`M${x+w/2},${y} L${x+w/2},${y+h/2.2} M${x+w/2-14},${y} L${x+w/2+14},${y}`,4)}
+function door(x,y){return rect(x,y,150,260,'none',INK,5,4)+circ(x+125,y+140,6,INK,INK,2)}
+function counter(x,y,w=220){return ln(`M${x},${y} L${x+w},${y}`,5)+rect(x+10,y,w-20,90,'none',INK,5,3)}
+function cloud(x,y,sc=1){return `<g transform="translate(${x},${y}) scale(${sc})">`+ln('M-34,14 q-22,-2 -18,-20 q4,-18 24,-12 q8,-24 34,-14 q22,2 20,20 q22,2 14,22 q-4,12 -20,10 Z',4.5,INK,BL)+`</g>`}
+function clock(x,y,r=62){
+  let tk='';for(let i=0;i<12;i++){const a=i*30*R;tk+=ln(`M${x+Math.sin(a)*(r-10)},${y-Math.cos(a)*(r-10)} L${x+Math.sin(a)*(r-4)},${y-Math.cos(a)*(r-4)}`,3)}
+  const ha=(9+40/60)*30*R, ma=240*R;
+  return circ(x,y,r,PAPER)+tk+ln(`M${x},${y} L${x+Math.sin(ha)*(r-26)},${y-Math.cos(ha)*(r-26)}`,5)+ln(`M${x},${y} L${x+Math.sin(ma)*(r-12)},${y-Math.cos(ma)*(r-12)}`,4.5,OR)+circ(x,y,4,INK);
+}
+function bulb(x,y,t){return circ(x,y,38,OR)+rect(x-16,y+36,32,26,PAPER,INK,5,4)+ln(`M${x-10},${y+70} L${x+10},${y+70}`,5)+rays(x,y,50,70,8,t,OR)}
+
+// ---------- frames ----------
+const F={
+ '1a':(t)=> clock(1030,260,78)+ln('M1030,338 L1030,430 M990,430 L1070,430',6)
+    + man({x:330,y:520,s:1.6,face:'happy',aR:[145+Math.sin(t*2.4)*14,170+Math.sin(t*2.4)*22],aL:[22,12],lL:[14,8],lR:[-14,-8],lean:3},t),
+ '1b':(t)=> tv(900,330,230,140)+couch(200,500)
+    + (()=>{const m=man({x:330,y:500,s:1.5,face:'calm',look:1,lean:-6,lL:[88,4],lR:[84,4],aL:[40,100+Math.sin(t*2)*3],aR:[20,60]},t);
+        return m+remote(man.hand[0]+4,man.hand[1]-8,80)})(),
+ '1c':(t)=> counter(840,420,300)+mug(990,420,1.7)+rays(1000,355,75,115,9,t,OR,200,140)
+    + couch(150,500)+man({x:280,y:500,s:1.5,face:'worry',look:1,lean:-4,lL:[88,4],lR:[84,4],aL:[40,100],aR:[20,60],head:Math.sin(t*3)*4},t),
+ '1d':(t)=> couch(400,500)+phone(110,320,t)+rays(145,380,85,120,10,t,OR)
+    + box(1030,440,130,110)+door(940,200)+rays(1095,495,95,130,10,t,OR)
+    + man({x:530,y:500,s:1.5,face:'worry',look:Math.sin(t*1.5),lean:-3,lL:[88,4],lR:[84,4],aL:[40,100],aR:[20,60]},t),
+ '1e':(t)=> couch(400,500)+cloud(560,190+Math.sin(t*1.5)*6,1.6)
+    + man({x:530,y:500,s:1.5,face:'guilty',lean:-10,lL:[88,4],lR:[84,4],aL:[8,4],aR:[-4,2],head:5},t),
+ '1f':(t)=> txt('?',280,330,190,BL)+ln('M420,290 L780,290 M738,252 L784,290 M738,328 L784,290',8,BL)+bulb(940,285,t)
+    + man({x:600,y:560,s:1.2,face:'curious',lookY:-1,lean:2,aL:[14,8],aR:[-14,-8],head:-8,lL:[10,5],lR:[-10,-5]},t)
+};
+function draw(id,t,dur){
+  const p=t/dur, z=1+0.04*p, fade=Math.min(1,t/0.3);
+  const seed=Math.floor(t*6)%50+1;
+  document.getElementById('root').innerHTML=
+   `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs><filter id="w"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="${seed}"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></defs>
+    <rect width="1280" height="720" fill="${PAPER}"/>
+    <g opacity="${fade}" transform="translate(0 -40) translate(640 360) scale(${z}) translate(-640 -360)"><g filter="url(#w)">${F[id](t)}</g></g></svg>`;
+}
+window.draw=draw;
+</script></body></html>
