@@ -1,0 +1,14 @@
+const {chromium}=require('playwright');const {start}=require('./serve');const fs=require('fs');
+(async()=>{const out=process.argv[2];fs.mkdirSync(out,{recursive:true});const srv=await start(8952);
+ const b=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
+ const p=await b.newPage({viewport:{width:540,height:960}});p.on('console',m=>console.log('C',m.text()));p.on('pageerror',e=>console.log('E',e.message));
+ await p.goto('http://localhost:8952/zylox.html');await p.waitForFunction(()=>window.ready,null,{timeout:90000});
+ const shot=async(name,fn)=>{await p.evaluate(fn);await p.screenshot({path:`${out}/${name}.png`});};
+ await shot('a_default',()=>window.renderAt(1.5));
+ await shot('b_nosky',()=>{window.dbg.skyM.visible=false;window.renderAt(1.5);});
+ await shot('c_noworld',()=>{window.dbg.skyM.visible=true;window.dbg.world.visible=false;window.renderAt(1.5);});
+ await shot('d_world_t6.8',()=>{window.dbg.world.visible=true;window.renderAt(6.8);});
+ await shot('e_world_nosky_t6.8',()=>{window.dbg.skyM.visible=false;window.renderAt(6.8);});
+ const info=await p.evaluate(()=>{window.renderAt(1.5);const d=window.dbg;return {cam:d.camera.position.toArray(),far:d.camera.far,skyPos:d.skyM.getWorldPosition(new d.camera.position.constructor()).toArray(),roomPos:d.room.position.toArray()}});
+ console.log(JSON.stringify(info));
+ await b.close();srv.close();})();
