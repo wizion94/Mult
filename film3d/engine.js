@@ -52,11 +52,13 @@ export async function createStage(jsonUrl, canvasParent) {
   const segs = (pts, c = INK, lw = 3.4) => { const g = new LineSegmentsGeometry(); g.setPositions(pts.flat()); return new LineSegments2(g, mkLine(c, lw)); };
   function solid(w, h, d, color, lw = 3.4) {
     const g = new THREE.Group(), geo = new THREE.BoxGeometry(w, h, d);
-    g.add(new THREE.Mesh(geo, fillMat(color))); g.add(edgeOf(geo, lw)); return g;
+    const m = new THREE.Mesh(geo, fillMat(color)); if (Math.min(w, h, d) >= 0.07) m.userData.ob = {k: 'b', h: [w / 2, h / 2, d / 2]};
+    g.add(m); g.add(edgeOf(geo, lw)); return g;
   }
   function cyl(r, h, color, seg = 28, lw = 3.4) {
     const g = new THREE.Group(), geo = new THREE.CylinderGeometry(r, r, h, seg);
-    g.add(new THREE.Mesh(geo, fillMat(color))); g.add(edgeOf(geo, lw, INK, 40)); return g;
+    const m = new THREE.Mesh(geo, fillMat(color)); if (r >= 0.15) m.userData.ob = {k: 'c', r, hh: h / 2};
+    g.add(m); g.add(edgeOf(geo, lw, INK, 40)); return g;
   }
   function hullSphere(r, color, k = 1.08) {
     const g = new THREE.Group();
@@ -143,7 +145,7 @@ export async function createStage(jsonUrl, canvasParent) {
       o = solid(0.05, 0.02, 0.17, '#ffffff', 2.6); o.position.set(at[0], at[1], at[2]); o.rotation.y = 0.5;
       
     }
-    if (o) { scene.add(o); P[p.id] = o; }
+    if (o) { scene.add(o); P[p.id] = o; o.traverse(m => { if (m.userData.ob) m.userData.pid = p.id; }); }
   }
   addAlarm('mug', P.mug, new V3(1.0, 1.35, -2.5));
   addAlarm('phone', P.phone, new V3(1.7, 1.0, 0.95));
@@ -406,6 +408,32 @@ export async function createStage(jsonUrl, canvasParent) {
     bulbRays.quaternion.copy(camera.quaternion).premultiply(diagram.quaternion.clone().invert());
   }
 
+  // ============================================================ collision check
+  let obstacles = null;
+  let MARGIN = 0;
+  const depthIn = (pt) => {  // returns [maxDepth, id] over obstacles
+    let best = 0, id = null;
+    for (const o of obstacles) {
+      const q = pt.clone().applyMatrix4(o.inv), b = o.ob; let d;
+      if (b.k === 'b') d = Math.min(b.h[0] - Math.abs(q.x), b.h[1] - Math.abs(q.y), b.h[2] - Math.abs(q.z));
+      else d = Math.min(b.r - Math.hypot(q.x, q.z), b.hh - Math.abs(q.y));
+      d += MARGIN;
+      if (d > best) { best = d; id = o.pid; }
+    }
+    return [best, id];
+  };
+  function collide(t, margin = 0) {
+    MARGIN = margin;
+    if (!obstacles) { scene.updateMatrixWorld(true); obstacles = []; scene.traverse(m => { if (m.userData.ob) obstacles.push({ob: m.userData.ob, pid: m.userData.pid, inv: m.matrixWorld.clone().invert()}); }); }
+    const r = rigAt(t), out = [];
+    const seg = (name, a, b) => { for (let i = 0; i <= 6; i++) { const p = a.clone().lerp(b, i / 6), [d, id] = depthIn(p); if (d > 0.025) out.push({part: name, obstacle: id, depth: d}); if (p.y < -0.02) out.push({part: name, obstacle: 'floor', depth: -p.y}); } };
+    seg('spine', r.hip, r.neck); seg('thighL', r.hip, r.fL.knee); seg('shinL', r.fL.knee, r.fL.ank); seg('footL', r.fL.ank, r.fL.toe);
+    seg('thighR', r.hip, r.fR.knee); seg('shinR', r.fR.knee, r.fR.ank); seg('footR', r.fR.ank, r.fR.toe);
+    seg('uaL', r.aL.sh, r.aL.elb); seg('faL', r.aL.elb, r.aL.hand); seg('uaR', r.aR.sh, r.aR.elb); seg('faR', r.aR.elb, r.aR.hand);
+    for (const dv of [[0, 0, 0], [HR, 0, 0], [-HR, 0, 0], [0, HR, 0], [0, 0, HR], [0, 0, -HR]]) { const p = r.hc.clone().add(new V3(...dv)), [d, id] = depthIn(p); if (d > 0.025) out.push({part: 'head', obstacle: id, depth: d}); }
+    return out;
+  }
+
   // ============================================================ post pass
   const quadScene = new THREE.Scene(), quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   const quadMat = new THREE.ShaderMaterial({
@@ -426,5 +454,5 @@ export async function createStage(jsonUrl, canvasParent) {
     renderer.setRenderTarget(rt); renderer.clear(); renderer.render(scene, camera);
     renderer.setRenderTarget(null); quadMat.uniforms.time.value = t; renderer.render(quadScene, quadCam);
   }
-  return {renderAt, duration: data.meta.duration, fps: data.meta.fps};
+  return {renderAt, collide, duration: data.meta.duration, fps: data.meta.fps};
 }

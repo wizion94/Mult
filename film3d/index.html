@@ -5,6 +5,6 @@
 import {createStage} from './engine.js';
 const q=new URLSearchParams(location.search);
 try{const s=await createStage(q.get('scene')||'scene1.json',document.getElementById('app'));
- window.renderAt=s.renderAt;window.meta={duration:s.duration,fps:s.fps};window.ready=true;}
+ window.renderAt=s.renderAt;window.collide=s.collide;window.meta={duration:s.duration,fps:s.fps};window.ready=true;}
 catch(e){window.err=String(e.stack||e);console.log('ERR',window.err)}
 </script></body></html>
