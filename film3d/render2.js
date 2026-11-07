@@ -8,6 +8,6 @@ const {chromium}=require('playwright');const {start}=require('./serve');const fs
  const err=await p.evaluate(()=>window.err);if(err){console.log(err);process.exit(1)}
  const {duration}=await p.evaluate(()=>window.meta);const N=Math.round(duration*fps);const a=f0!==undefined?+f0:0,e=f1!==undefined?+f1:N;
  let t0=Date.now(),c=0;
- for(let n=a+k;n<e;n+=K){await p.evaluate(t=>window.renderAt(t),n/fps);await p.screenshot({path:`${out}/${String(n).padStart(6,'0')}.jpg`,type:'jpeg',quality:93});c++;}
+ for(let n=a+k;n<e;n+=K){const fp=`${out}/${String(n).padStart(6,'0')}.jpg`;if(fs.existsSync(fp)&&fs.statSync(fp).size>20000)continue;await p.evaluate(t=>window.renderAt(t),n/fps);await p.screenshot({path:`${out}/${String(n).padStart(6,'0')}.jpg`,type:'jpeg',quality:93});c++;}
  console.log(`shard ${k}: ${c} frames in ${((Date.now()-t0)/1000).toFixed(1)}s (${((Date.now()-t0)/c).toFixed(0)} ms/frame)`);
  await b.close();srv.close();})();

@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage: render_all.sh OUTDIR [scenes...]   renders every frame on the i/60 grid at 1920x1080, 4 shards per scene
+# resumable: usage render_all.sh OUTDIR [scenes...]; skips frames that already exist
 cd /home/user/Mult/film3d
 OUT=$1; shift
 SC=${@:-"s1 s2 s3 s4 s5 s6"}
