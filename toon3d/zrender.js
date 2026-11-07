@@ -3,5 +3,5 @@ const {chromium}=require('playwright');const {start}=require('./serve');const fs
  const b=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
  const p=await b.newPage({viewport:{width:1080,height:1920}});p.on('pageerror',e=>console.log('E',e.message));
  await p.goto(`http://localhost:${8960+k}/zylox.html`);await p.waitForFunction(()=>window.ready,null,{timeout:90000});
- const N=Math.round(dur*fps);for(let n=k;n<N;n+=K){await p.evaluate(t=>window.renderAt(t),n/fps);await p.screenshot({path:`${out}/${String(n).padStart(5,'0')}.jpg`,type:'jpeg',quality:93});}
+ const N=Math.round(dur*fps);for(let n=k;n<N;n+=K){const fp=`${out}/${String(n).padStart(5,'0')}.jpg`;if(fs.existsSync(fp)&&fs.statSync(fp).size>20000)continue;await p.evaluate(t=>window.renderAt(t),n/fps);await p.screenshot({path:`${out}/${String(n).padStart(5,'0')}.jpg`,type:'jpeg',quality:93});}
  await b.close();srv.close();})();
