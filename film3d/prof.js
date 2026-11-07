@@ -1,0 +1,13 @@
+const {chromium}=require('playwright');const {start}=require('./serve');
+(async()=>{const w=1920,h=1080;const srv=await start(8795);
+ const b=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
+ const p=await b.newPage({viewport:{width:w,height:h}});await p.goto(`http://localhost:8795/index2.html?scene=s1.json&w=${w}`);await p.waitForFunction(()=>window.ready);
+ const T=async(label,f)=>{const t0=Date.now();const r=await f();console.log(label.padEnd(34),(Date.now()-t0)+'ms',r??'');};
+ await p.evaluate(()=>window.renderAt(10,{noblur:true}));
+ await T('profile N=1 @t=10',()=>p.evaluate(()=>JSON.stringify(window.renderAt(10,{noblur:true,profile:true}).prof)));
+ await T('profile N=4 @t=6.5',()=>p.evaluate(()=>JSON.stringify(window.renderAt(6.5,{profile:true}))));
+ await T('renderAt noblur (N=1) x3',()=>p.evaluate(()=>{const t=performance.now();for(let i=0;i<3;i++)window.renderAt(10+i*0.017,{noblur:true});window.stage.reg;const gl=document.querySelector('canvas').getContext('webgl2');gl.finish();return ((performance.now()-t)/3).toFixed(0)+' ms js/frame'}));
+ await T('screenshot jpeg93',()=>p.screenshot({type:'jpeg',quality:93}).then(b=>b.length+' bytes'));
+ await T('screenshot png',()=>p.screenshot({type:'png'}).then(b=>b.length+' bytes'));
+ await T('renderAt blur (auto N) @t=6.5',()=>p.evaluate(()=>{const r=window.renderAt(6.5);return JSON.stringify(r)}));
+ await b.close();srv.close();})();

@@ -1,0 +1,902 @@
+{
+ "meta": {
+  "title": "The Mug Can Wait",
+  "scene": "s6",
+  "duration": 38.4,
+  "fade_in": 0.4,
+  "fade_out": 0
+ },
+ "set": {
+  "props": [
+   {
+    "type": "ground",
+    "z0": -2.6,
+    "z1": 9
+   },
+   {
+    "type": "wall",
+    "at": [
+     0,
+     0,
+     -3
+    ]
+   },
+   {
+    "type": "couch",
+    "id": "couch",
+    "at": [
+     0,
+     -0.5
+    ],
+    "yaw": -0.6
+   },
+   {
+    "type": "tv",
+    "id": "tv",
+    "at": [
+     3.1,
+     1.55
+    ],
+    "yaw": 3.141592653589793,
+    "alarm": true,
+    "shake": "none",
+    "rayY": 1.35,
+    "rayScale": 1.5
+   },
+   {
+    "type": "counter",
+    "id": "counter",
+    "at": [
+     0.9,
+     0,
+     -2.62
+    ],
+    "sink": true,
+    "sinkX": -0.55
+   },
+   {
+    "type": "mug",
+    "id": "mug",
+    "at": [
+     1.0,
+     0.95,
+     -2.62
+    ],
+    "alarm": true,
+    "shake": "rot",
+    "rayY": 0.42,
+    "stains": true
+   },
+   {
+    "type": "side_table",
+    "id": "table",
+    "at": [
+     1.7,
+     0.95
+    ]
+   },
+   {
+    "type": "door",
+    "id": "door",
+    "at": [
+     3.3,
+     0,
+     -2.97
+    ]
+   },
+   {
+    "type": "box",
+    "id": "box",
+    "at": [
+     3.3,
+     0,
+     -2.45
+    ]
+   },
+   {
+    "type": "clock",
+    "id": "clock",
+    "at": [
+     -2.4,
+     2.1,
+     -2.96
+    ],
+    "time": "9:40"
+   },
+   {
+    "type": "window_",
+    "id": "win",
+    "at": [
+     0.9,
+     2.15,
+     -2.96
+    ],
+    "w": 1.3,
+    "h": 1.0
+   },
+   {
+    "type": "moon",
+    "id": "moon",
+    "at": [
+     0.9,
+     2.15,
+     -2.9
+    ],
+    "scale": 0.8
+   },
+   {
+    "type": "side_table",
+    "id": "table6",
+    "at": [
+     -1.65,
+     0.65
+    ]
+   },
+   {
+    "type": "mug",
+    "id": "mug2",
+    "at": [
+     -1.65,
+     0.62,
+     0.65
+    ],
+    "hidden": true,
+    "scale": 1.2
+   },
+   {
+    "type": "remote",
+    "id": "remote",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "holdOff": [
+     0,
+     0,
+     0
+    ],
+    "holdYaw": -0.19999999999999996,
+    "holdTilt": 0.3
+   },
+   {
+    "type": "group",
+    "id": "tabnote",
+    "at": [
+     -0.9,
+     1.8,
+     0.6
+    ],
+    "hidden": true,
+    "children": [
+     {
+      "type": "tab",
+      "at": [
+       0,
+       0,
+       0
+      ],
+      "w": 0.9,
+      "h": 0.45,
+      "scale": 1.2,
+      "bob": 0.05
+     },
+     {
+      "type": "notepad",
+      "at": [
+       0.45,
+       -0.3,
+       0.08
+      ],
+      "w": 0.3,
+      "h": 0.35
+     }
+    ]
+   },
+   {
+    "type": "balance",
+    "id": "bal",
+    "at": [
+     -2.3,
+     0,
+     -0.2
+    ],
+    "scale": 0.6,
+    "tilt": 0.14,
+    "hidden": true
+   },
+   {
+    "type": "label",
+    "id": "l_guilt",
+    "at": [
+     -3.1,
+     1.75,
+     -0.1
+    ],
+    "text": "Guilt",
+    "size": 0.32,
+    "color": "#7fa8d8",
+    "reveal": true,
+    "prog": 0
+   },
+   {
+    "type": "label",
+    "id": "l_proof",
+    "at": [
+     -1.5,
+     1.7,
+     -0.1
+    ],
+    "text": "Proof",
+    "size": 0.32,
+    "reveal": true,
+    "prog": 0
+   },
+   {
+    "type": "bell",
+    "id": "bell",
+    "at": [
+     -2.7,
+     0.05,
+     1.2
+    ],
+    "scale": 1.3,
+    "hidden": true,
+    "rz": 0.0
+   },
+   {
+    "type": "flame_x",
+    "id": "flame",
+    "at": [
+     -2.7,
+     1.9,
+     1.2
+    ],
+    "scale": 1.3,
+    "hidden": true,
+    "bob": 0.06
+   }
+  ]
+ },
+ "actors": {
+  "SAM": {
+   "at": [
+    0.62,
+    -0.08
+   ],
+   "yaw": -0.6,
+   "face": "smile",
+   "sit": 1
+  }
+ },
+ "timeline": [
+  {
+   "t": 0.0,
+   "who": "SAM",
+   "do": "warp",
+   "to": [
+    0.62,
+    -0.08
+   ],
+   "yaw": -0.6,
+   "sit": 1
+  },
+  {
+   "t": 0.01,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.02,
+   "who": "remote",
+   "do": "attach",
+   "to": "SAM.R"
+  },
+  {
+   "t": 0.03,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.001,
+   "right": "hold_front"
+  },
+  {
+   "t": 0,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.3,
+   "face": "smile"
+  },
+  {
+   "t": 5.4,
+   "who": "mug",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0.35
+  },
+  {
+   "t": 5.5,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.7,
+   "face": "amused"
+  },
+  {
+   "t": 5.8,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": "mug"
+  },
+  {
+   "t": 10.8,
+   "who": "tabnote",
+   "do": "appear",
+   "dur": 0.6
+  },
+  {
+   "t": 11.2,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": [
+    -0.9,
+    1.6,
+    0.6
+   ]
+  },
+  {
+   "t": 12.5,
+   "who": "SAM",
+   "do": "nod",
+   "dur": 0.9
+  },
+  {
+   "t": 12.6,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.6,
+   "face": "calm"
+  },
+  {
+   "t": 16.3,
+   "who": "tabnote",
+   "do": "disappear",
+   "dur": 0.5
+  },
+  {
+   "t": 16.9,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": [
+    -2.3,
+    1.0,
+    -0.1
+   ]
+  },
+  {
+   "t": 17.1,
+   "who": "bal",
+   "do": "appear",
+   "dur": 0.6
+  },
+  {
+   "t": 17.6,
+   "who": "l_guilt",
+   "do": "prog",
+   "dur": 1.0,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 19.0,
+   "who": "l_proof",
+   "do": "prog",
+   "dur": 1.0,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 19.3,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.6,
+   "face": "puzzled"
+  },
+  {
+   "t": 20.4,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.6,
+   "left": "rest",
+   "right": "hold_front"
+  },
+  {
+   "t": 21.2,
+   "who": "bal",
+   "do": "disappear",
+   "dur": 0.5
+  },
+  {
+   "t": 21.2,
+   "who": "l_guilt",
+   "do": "scale",
+   "dur": 0.4,
+   "to": 0
+  },
+  {
+   "t": 21.2,
+   "who": "l_proof",
+   "do": "scale",
+   "dur": 0.4,
+   "to": 0
+  },
+  {
+   "t": 21.5,
+   "who": "bell",
+   "do": "appear",
+   "dur": 0.5
+  },
+  {
+   "t": 22.0,
+   "who": "bell",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 1
+  },
+  {
+   "t": 24.2,
+   "who": "flame",
+   "do": "appear",
+   "dur": 0.6
+  },
+  {
+   "t": 26.8,
+   "who": "bell",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0
+  },
+  {
+   "t": 21.8,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": [
+    -2.7,
+    0.6,
+    1.2
+   ]
+  },
+  {
+   "t": 22.0,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.7,
+   "face": "calm"
+  },
+  {
+   "t": 26.9,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": null
+  },
+  {
+   "t": 27.9,
+   "who": "bell",
+   "do": "disappear",
+   "dur": 0.4
+  },
+  {
+   "t": 27.9,
+   "who": "flame",
+   "do": "disappear",
+   "dur": 0.4
+  },
+  {
+   "t": 28.2,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": "tv"
+  },
+  {
+   "t": 28.6,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.5,
+   "right": "open"
+  },
+  {
+   "t": 29.3,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.25,
+   "right": "hold_front"
+  },
+  {
+   "t": 29.45,
+   "who": "tv",
+   "do": "prog",
+   "dur": 0.15,
+   "to": 1
+  },
+  {
+   "t": 29.5,
+   "who": "tv",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 1
+  },
+  {
+   "t": 30.6,
+   "who": "tv",
+   "do": "alarm",
+   "dur": 1.2,
+   "to": 0.35
+  },
+  {
+   "t": 29.5,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.5,
+   "face": "happy"
+  },
+  {
+   "t": 31.7,
+   "who": "SAM",
+   "do": "reach",
+   "dur": 0.35,
+   "pos": [
+    -0.07,
+    0.47,
+    -0.185
+   ]
+  },
+  {
+   "t": 32.05,
+   "who": "remote",
+   "do": "detach"
+  },
+  {
+   "t": 32.1,
+   "who": "SAM",
+   "do": "unreach",
+   "dur": 0.3
+  },
+  {
+   "t": 32.1,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.3,
+   "right": "rest"
+  },
+  {
+   "t": 32.0,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.6,
+   "at": null
+  },
+  {
+   "t": 32.5,
+   "who": "SAM",
+   "do": "stand_up",
+   "dur": 1.1
+  },
+  {
+   "t": 33.6,
+   "who": "SAM",
+   "do": "walk_to",
+   "dur": 1.0,
+   "to": [
+    1.4,
+    -0.3
+   ]
+  },
+  {
+   "t": 34.6,
+   "who": "SAM",
+   "do": "walk_to",
+   "dur": 1.2,
+   "to": [
+    2.6,
+    -0.4
+   ]
+  },
+  {
+   "t": 35.8,
+   "who": "SAM",
+   "do": "walk_to",
+   "dur": 2.0,
+   "to": [
+    5.6,
+    -0.5
+   ]
+  },
+  {
+   "t": 37.6,
+   "who": "SAM",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 33.6,
+   "who": "mug2",
+   "do": "appear",
+   "dur": 0.6
+  },
+  {
+   "who": "CAMERA",
+   "do": "keys",
+   "keys": [
+    {
+     "t": 0,
+     "pos": [
+      1.9,
+      1.4,
+      4.9
+     ],
+     "look": [
+      0.7,
+      0.95,
+      -0.1
+     ],
+     "fov": 32,
+     "ap": 6
+    },
+    {
+     "t": 3.0,
+     "pos": [
+      1.7,
+      1.3,
+      4.2
+     ],
+     "look": [
+      0.3,
+      0.95,
+      -0.3
+     ],
+     "fov": 32,
+     "ap": 8
+    },
+    {
+     "t": 5.1,
+     "pos": [
+      1.6,
+      1.3,
+      3.9
+     ],
+     "look": [
+      0.4,
+      1.0,
+      -0.4
+     ],
+     "fov": 30,
+     "ap": 10
+    },
+    {
+     "t": 7.5,
+     "pos": [
+      1.3,
+      1.3,
+      3.9
+     ],
+     "look": [
+      0.8,
+      1.1,
+      -1.2
+     ],
+     "fov": 30,
+     "ap": 12
+    },
+    {
+     "t": 10.6,
+     "pos": [
+      1.5,
+      1.3,
+      4.3
+     ],
+     "look": [
+      0.8,
+      1.1,
+      -1.3
+     ],
+     "fov": 30,
+     "ap": 10
+    },
+    {
+     "t": 13.0,
+     "pos": [
+      1.8,
+      1.5,
+      4.0
+     ],
+     "look": [
+      0.2,
+      1.35,
+      0.0
+     ],
+     "fov": 32,
+     "ap": 8
+    },
+    {
+     "t": 16.9,
+     "pos": [
+      0.9,
+      1.5,
+      4.3
+     ],
+     "look": [
+      0.0,
+      1.3,
+      -0.1
+     ],
+     "fov": 32,
+     "ap": 8
+    },
+    {
+     "t": 18.5,
+     "pos": [
+      -0.2,
+      1.5,
+      4.4
+     ],
+     "look": [
+      -1.8,
+      1.2,
+      0.0
+     ],
+     "fov": 34,
+     "ap": 8
+    },
+    {
+     "t": 21.2,
+     "pos": [
+      -0.8,
+      1.6,
+      4.8
+     ],
+     "look": [
+      -1.8,
+      1.2,
+      0.2
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 23.5,
+     "pos": [
+      -0.5,
+      1.5,
+      5.0
+     ],
+     "look": [
+      -1.8,
+      0.9,
+      1.0
+     ],
+     "fov": 34,
+     "ap": 8
+    },
+    {
+     "t": 28.0,
+     "pos": [
+      0.6,
+      1.5,
+      5.2
+     ],
+     "look": [
+      -0.4,
+      1.0,
+      0.3
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 29.5,
+     "pos": [
+      1.5,
+      1.4,
+      3.2
+     ],
+     "look": [
+      1.2,
+      1.2,
+      0.3
+     ],
+     "fov": 30,
+     "ap": 10
+    },
+    {
+     "t": 31.6,
+     "pos": [
+      1.3,
+      1.35,
+      2.8
+     ],
+     "look": [
+      1.3,
+      1.25,
+      0.4
+     ],
+     "fov": 28,
+     "ap": 14
+    },
+    {
+     "t": 34.0,
+     "pos": [
+      2.0,
+      1.8,
+      5.5
+     ],
+     "look": [
+      0.7,
+      1.0,
+      -0.2
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 38.4,
+     "pos": [
+      1.2,
+      2.1,
+      8.0
+     ],
+     "look": [
+      0.2,
+      1.3,
+      -0.5
+     ],
+     "fov": 38,
+     "ap": 0
+    }
+   ]
+  }
+ ],
+ "captions": [
+  {
+   "start": 0.0,
+   "end": 5.05,
+   "text": "The next shot looks like the first one. Sam on the couch."
+  },
+  {
+   "start": 5.1,
+   "end": 10.55,
+   "text": "The *mug* glowing faintly in the kitchen like a tiny, ceramic *guilt* trip."
+  },
+  {
+   "start": 10.6,
+   "end": 16.85,
+   "text": "But this time, he knows what it is. An *open* *tab*, with a *plan* attached."
+  },
+  {
+   "start": 16.9,
+   "end": 21.15,
+   "text": "The *guilt* wasn't proof that he was doing something wrong."
+  },
+  {
+   "start": 21.2,
+   "end": 27.95,
+   "text": "It was just an old *alarm*, going off in a room where *nothing* was on fire."
+  },
+  {
+   "start": 28.0,
+   "end": 31.55,
+   "text": "Sam picks up the remote. He presses *Play*."
+  },
+  {
+   "start": 31.6,
+   "end": 38.35,
+   "text": "And you? What's your *mug* tonight? And what would happen if it just waited until morning?"
+  }
+ ]
+}

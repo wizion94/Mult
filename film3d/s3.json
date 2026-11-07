@@ -1,0 +1,2232 @@
+{
+ "meta": {
+  "title": "The Mug Can Wait",
+  "scene": "s3",
+  "duration": 82.8,
+  "fade_in": 0,
+  "fade_out": 0.35
+ },
+ "set": {
+  "props": [
+   {
+    "type": "ground",
+    "z0": -4,
+    "z1": 9
+   },
+   {
+    "type": "wall",
+    "at": [
+     0,
+     0,
+     -4
+    ]
+   },
+   {
+    "type": "label",
+    "id": "q0",
+    "at": [
+     -0.2,
+     1.5,
+     0.5
+    ],
+    "text": "?",
+    "size": 0.5,
+    "color": "#7fa8d8",
+    "reveal": false
+   },
+   {
+    "type": "head_profile",
+    "id": "head",
+    "at": [
+     -0.2,
+     1.5,
+     0
+    ],
+    "scale": 0.7
+   },
+   {
+    "type": "puzzle",
+    "id": "puz",
+    "at": [
+     -0.3,
+     1.75,
+     0.2
+    ],
+    "scale": 1.1,
+    "bob": 0.03,
+    "hidden": true
+   },
+   {
+    "type": "label",
+    "id": "lab_z",
+    "at": [
+     0.2,
+     2.95,
+     0.2
+    ],
+    "text": "Zeigarnik effect",
+    "size": 0.42,
+    "prog": 0
+   },
+   {
+    "type": "checklist",
+    "id": "chk",
+    "at": [
+     6.4,
+     1.35,
+     -0.2
+    ],
+    "rows": [
+     1,
+     1,
+     "o"
+    ],
+    "w": 1.9,
+    "prog": 0,
+    "alarm": true,
+    "rayY": 1.15,
+    "shake": "rot"
+   },
+   {
+    "type": "notepad",
+    "id": "pad_b",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "holdOff": [
+     0.0,
+     0.02,
+     0.0
+    ],
+    "holdYaw": 0.0,
+    "holdTilt": 0,
+    "w": 0.25,
+    "h": 0.32
+   },
+   {
+    "type": "bust",
+    "id": "bust_c",
+    "at": [
+     10.0,
+     1.3,
+     0
+    ],
+    "scale": 1.0
+   },
+   {
+    "type": "bubble",
+    "id": "bb1",
+    "at": [
+     9.05,
+     2.5,
+     0
+    ],
+    "kind": "thought",
+    "w": 1.0,
+    "h": 0.65,
+    "hidden": true,
+    "children": [
+     {
+      "type": "checkbox",
+      "at": [
+       0,
+       0,
+       0.04
+      ],
+      "size": 0.3,
+      "state": 1,
+      "color": "#9a9a9a"
+     }
+    ]
+   },
+   {
+    "type": "bubble",
+    "id": "bb2",
+    "at": [
+     11.15,
+     2.75,
+     0
+    ],
+    "kind": "thought",
+    "w": 1.7,
+    "h": 1.05,
+    "hidden": true,
+    "children": [
+     {
+      "type": "checkbox",
+      "at": [
+       0,
+       0,
+       0.04
+      ],
+      "size": 0.55,
+      "state": 0,
+      "color": "#f28c28"
+     }
+    ]
+   },
+   {
+    "type": "browser",
+    "id": "brw",
+    "at": [
+     15.0,
+     1.35,
+     0
+    ],
+    "w": 3.4,
+    "h": 1.9,
+    "tabs": 8,
+    "hi": 2,
+    "prog": 0
+   },
+   {
+    "type": "box",
+    "id": "box_e",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "size": [
+     0.5,
+     0.38,
+     0.42
+    ],
+    "holdOff": [
+     0.12,
+     -0.1,
+     0.0
+    ],
+    "holdYaw": 0,
+    "holdTilt": 0
+   },
+   {
+    "type": "tab",
+    "id": "ft0",
+    "at": [
+     17.4,
+     2.6,
+     -0.5
+    ],
+    "w": 0.7,
+    "h": 0.34,
+    "fill": "#ebe5d6",
+    "scale": 0.9,
+    "bob": 0.05,
+    "bobPhase": 0
+   },
+   {
+    "type": "tab",
+    "id": "ft1",
+    "at": [
+     18.4,
+     2.95,
+     -0.7
+    ],
+    "w": 0.7,
+    "h": 0.34,
+    "fill": "#ebe5d6",
+    "scale": 0.9,
+    "bob": 0.05,
+    "bobPhase": 1
+   },
+   {
+    "type": "tab",
+    "id": "ft2",
+    "at": [
+     19.3,
+     2.5,
+     -0.5
+    ],
+    "w": 0.7,
+    "h": 0.34,
+    "fill": "#ebe5d6",
+    "scale": 0.9,
+    "bob": 0.05,
+    "bobPhase": 2
+   },
+   {
+    "type": "couch",
+    "id": "couch_e",
+    "at": [
+     22.3,
+     -0.5
+    ],
+    "yaw": -0.6
+   },
+   {
+    "type": "tab",
+    "id": "bt0",
+    "at": [
+     21.2,
+     2.6,
+     0.2
+    ],
+    "w": 1.1,
+    "h": 0.55,
+    "fill": "#f28c28",
+    "hidden": true,
+    "alarm": true,
+    "rayY": 0.5,
+    "rayScale": 0.7,
+    "shake": "rot",
+    "bob": 0.06,
+    "bobPhase": 0
+   },
+   {
+    "type": "tab",
+    "id": "bt1",
+    "at": [
+     22.6,
+     3.0,
+     0.0
+    ],
+    "w": 1.1,
+    "h": 0.55,
+    "fill": "#ffffff",
+    "hidden": true,
+    "alarm": true,
+    "rayY": 0.5,
+    "rayScale": 0.7,
+    "shake": "rot",
+    "bob": 0.06,
+    "bobPhase": 1
+   },
+   {
+    "type": "tab",
+    "id": "bt2",
+    "at": [
+     23.4,
+     2.4,
+     0.2
+    ],
+    "w": 1.1,
+    "h": 0.55,
+    "fill": "#f28c28",
+    "hidden": true,
+    "alarm": true,
+    "rayY": 0.5,
+    "rayScale": 0.7,
+    "shake": "rot",
+    "bob": 0.06,
+    "bobPhase": 2
+   },
+   {
+    "type": "whiteboard",
+    "id": "wb",
+    "at": [
+     26.6,
+     2.2,
+     -0.9
+    ],
+    "w": 1.5,
+    "h": 0.9
+   },
+   {
+    "type": "label",
+    "id": "lab_2011",
+    "at": [
+     26.6,
+     2.2,
+     -0.85
+    ],
+    "text": "2011",
+    "size": 0.62,
+    "color": "#f28c28",
+    "prog": 0
+   },
+   {
+    "type": "table",
+    "id": "tab_f",
+    "at": [
+     25.0,
+     0
+    ],
+    "w": 0.8,
+    "d": 0.9
+   },
+   {
+    "type": "chair",
+    "id": "ch_f",
+    "at": [
+     26.25,
+     0
+    ],
+    "yaw": 3.141592653589793
+   },
+   {
+    "type": "card",
+    "id": "card_f",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "w": 0.22,
+    "h": 0.3,
+    "fill": "#f28c28",
+    "holdOff": [
+     0.05,
+     0,
+     0
+    ],
+    "holdYaw": 1.57,
+    "holdTilt": 0
+   },
+   {
+    "type": "table",
+    "id": "tab_g",
+    "at": [
+     30.9,
+     0
+    ],
+    "w": 0.8,
+    "d": 0.9
+   },
+   {
+    "type": "chair",
+    "id": "ch_g",
+    "at": [
+     29.7,
+     0
+    ],
+    "yaw": 0
+   },
+   {
+    "type": "book",
+    "id": "book_g",
+    "at": [
+     30.9,
+     0.8,
+     0
+    ],
+    "rx": 0.0
+   },
+   {
+    "type": "checkbox",
+    "id": "pb0",
+    "at": [
+     29.8,
+     1.8,
+     0.3
+    ],
+    "size": 0.26,
+    "state": 0,
+    "color": "#f28c28",
+    "hidden": true
+   },
+   {
+    "type": "checkbox",
+    "id": "pb1",
+    "at": [
+     30.080000000000002,
+     1.8,
+     0.3
+    ],
+    "size": 0.26,
+    "state": 0,
+    "color": "#f28c28",
+    "hidden": true
+   },
+   {
+    "type": "checkbox",
+    "id": "pb2",
+    "at": [
+     30.36,
+     1.8,
+     0.3
+    ],
+    "size": 0.26,
+    "state": 0,
+    "color": "#f28c28",
+    "hidden": true
+   },
+   {
+    "type": "checkbox",
+    "id": "pb3",
+    "at": [
+     29.8,
+     1.8,
+     0.3
+    ],
+    "size": 0.26,
+    "state": 0,
+    "color": "#f28c28",
+    "hidden": true
+   },
+   {
+    "type": "checkbox",
+    "id": "pb4",
+    "at": [
+     30.080000000000002,
+     1.8,
+     0.3
+    ],
+    "size": 0.26,
+    "state": 0,
+    "color": "#f28c28",
+    "hidden": true
+   },
+   {
+    "type": "table",
+    "id": "tab_h",
+    "at": [
+     35.9,
+     0
+    ],
+    "w": 0.8,
+    "d": 0.9
+   },
+   {
+    "type": "chair",
+    "id": "ch_h",
+    "at": [
+     34.7,
+     0
+    ],
+    "yaw": 0
+   },
+   {
+    "type": "grid",
+    "id": "grd",
+    "at": [
+     35.9,
+     1.4,
+     0
+    ],
+    "n": 4
+   },
+   {
+    "type": "arrow",
+    "id": "dn",
+    "at": [
+     37.4,
+     2.2,
+     0
+    ],
+    "len": 1.2,
+    "yaw": 0,
+    "hidden": true,
+    "rz": -1.5708
+   },
+   {
+    "type": "mug",
+    "id": "mug_i",
+    "at": [
+     38.65,
+     0.0,
+     0
+    ],
+    "scale": 3.2,
+    "prog": 0
+   },
+   {
+    "type": "label",
+    "id": "eq",
+    "at": [
+     40.0,
+     0.9,
+     0
+    ],
+    "text": "=",
+    "size": 1.6,
+    "reveal": true,
+    "prog": 0
+   },
+   {
+    "type": "tab",
+    "id": "tab_i",
+    "at": [
+     41.4,
+     0.9,
+     0
+    ],
+    "w": 1.0,
+    "h": 0.5,
+    "scale": 1.2,
+    "hidden": true
+   },
+   {
+    "type": "couch",
+    "id": "couch_j2",
+    "at": [
+     45.6,
+     -1.7
+    ],
+    "yaw": -0.6,
+    "color": "#efe9da"
+   },
+   {
+    "type": "couch",
+    "id": "couch_j",
+    "at": [
+     45.0,
+     -0.5
+    ],
+    "yaw": -0.6
+   },
+   {
+    "type": "weight",
+    "id": "wt_j",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "hidden": true,
+    "scale": 0.7,
+    "follow": {
+     "at": "PAR_j.chest",
+     "off": [
+      0.2,
+      -0.27,
+      0.0
+     ]
+    }
+   },
+   {
+    "type": "bars",
+    "id": "bars_k",
+    "at": [
+     48.8,
+     0,
+     0
+    ],
+    "items": [
+     {
+      "h": 0.8,
+      "color": "#ffffff"
+     },
+     {
+      "h": 1.6,
+      "color": "#f28c28"
+     }
+    ],
+    "grow": true,
+    "prog": 0,
+    "gap": 1.2
+   },
+   {
+    "type": "tv_icon",
+    "id": "tvi",
+    "at": [
+     48.95,
+     1.3,
+     0
+    ],
+    "hidden": true,
+    "scale": 1.0
+   },
+   {
+    "type": "face_icon",
+    "id": "fi",
+    "at": [
+     50.15,
+     2.1,
+     0
+    ],
+    "hidden": true,
+    "scale": 1.2
+   },
+   {
+    "type": "label",
+    "id": "lab_530",
+    "at": [
+     49.9,
+     0.5,
+     0.9
+    ],
+    "text": "530 adults",
+    "size": 0.36,
+    "prog": 0
+   },
+   {
+    "type": "chair",
+    "id": "ch_l1",
+    "at": [
+     53.8,
+     0
+    ],
+    "yaw": 0
+   },
+   {
+    "type": "chair",
+    "id": "ch_l2",
+    "at": [
+     56.2,
+     0
+    ],
+    "yaw": 3.141592653589793
+   },
+   {
+    "type": "bubble",
+    "id": "bb_l",
+    "at": [
+     56.5,
+     2.35,
+     0
+    ],
+    "kind": "thought",
+    "w": 1.0,
+    "h": 0.8,
+    "hidden": true,
+    "children": [
+     {
+      "type": "hourglass",
+      "at": [
+       0,
+       0,
+       0.04
+      ],
+      "scale": 1.2
+     }
+    ]
+   },
+   {
+    "type": "couch",
+    "id": "couch_m",
+    "at": [
+     59.4,
+     -0.5
+    ],
+    "yaw": -0.6
+   },
+   {
+    "type": "signpost",
+    "id": "sign_m",
+    "at": [
+     61.5,
+     0,
+     -0.9
+    ],
+    "h": 2.8,
+    "w": 1.9,
+    "dir": -1,
+    "text": "Earn it"
+   },
+   {
+    "type": "star",
+    "id": "star_m",
+    "at": [
+     60.3,
+     2.6,
+     -0.9
+    ],
+    "size": 1.1,
+    "bob": 0.06
+   },
+   {
+    "type": "tab",
+    "id": "tab_n",
+    "at": [
+     66.5,
+     2.0,
+     0.2
+    ],
+    "w": 1.0,
+    "h": 0.5,
+    "lock": true,
+    "scale": 1.0,
+    "bob": 0.08
+   }
+  ]
+ },
+ "actors": {
+  "RES_b": {
+   "at": [
+    3.5,
+    0
+   ],
+   "yaw": -0.35,
+   "face": "curious",
+   "plain": true,
+   "hidden": true
+  },
+  "SAMB": {
+   "at": [
+    17.2,
+    0.3
+   ],
+   "yaw": 0,
+   "face": "calm",
+   "plain": false,
+   "hidden": true
+  },
+  "SAM": {
+   "at": [
+    22.919,
+    -0.077
+   ],
+   "yaw": -0.6,
+   "face": "calm",
+   "hidden": true,
+   "sit": 1
+  },
+  "RES_f": {
+   "at": [
+    23.7,
+    0
+   ],
+   "yaw": 0,
+   "face": "curious",
+   "plain": true,
+   "hidden": true
+  },
+  "PAR_f": {
+   "at": [
+    25.7,
+    0
+   ],
+   "yaw": 3.141592653589793,
+   "face": "calm",
+   "plain": true,
+   "hidden": true,
+   "sit": 1
+  },
+  "PAR_g": {
+   "at": [
+    30.25,
+    0
+   ],
+   "yaw": 0,
+   "face": "focus",
+   "plain": true,
+   "hidden": true
+  },
+  "PAR_h": {
+   "at": [
+    35.25,
+    0
+   ],
+   "yaw": 0,
+   "face": "worry",
+   "plain": true,
+   "hidden": true
+  },
+  "PAR_j": {
+   "at": [
+    45.619,
+    -0.077
+   ],
+   "yaw": -0.6,
+   "face": "guilty",
+   "plain": true,
+   "hidden": true,
+   "sit": 1
+  },
+  "INT1": {
+   "at": [
+    54.35,
+    0
+   ],
+   "yaw": 0,
+   "face": "focus",
+   "plain": true,
+   "hidden": true,
+   "sit": 1
+  },
+  "INT2": {
+   "at": [
+    55.65,
+    0
+   ],
+   "yaw": 3.141592653589793,
+   "face": "guilty",
+   "plain": true,
+   "hidden": true,
+   "sit": 1
+  },
+  "SAM_m": {
+   "at": [
+    60.019,
+    -0.077
+   ],
+   "yaw": -0.6,
+   "face": "worry",
+   "plain": false,
+   "hidden": true,
+   "sit": 1
+  },
+  "SAM_n": {
+   "at": [
+    64.7,
+    0
+   ],
+   "yaw": -0.3,
+   "face": "puzzled",
+   "plain": false,
+   "hidden": true
+  }
+ },
+ "timeline": [
+  {
+   "t": 1.5,
+   "who": "puz",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 1.9,
+   "who": "puz",
+   "do": "tilt",
+   "dur": 0.5,
+   "to": 0.35
+  },
+  {
+   "t": 2.4,
+   "who": "puz",
+   "do": "tilt",
+   "dur": 0.5,
+   "to": -0.3
+  },
+  {
+   "t": 2.9,
+   "who": "puz",
+   "do": "tilt",
+   "dur": 0.5,
+   "to": 0.1
+  },
+  {
+   "t": 1.6,
+   "who": "lab_z",
+   "do": "prog",
+   "dur": 1.9,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 2.3,
+   "who": "RES_b",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 12.6,
+   "who": "RES_b",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 4.5,
+   "who": "RES_b",
+   "do": "arms",
+   "dur": 0.8,
+   "right": "hold_front",
+   "left": "down"
+  },
+  {
+   "t": 4.5,
+   "who": "pad_b",
+   "do": "attach",
+   "to": "RES_b.R"
+  },
+  {
+   "t": 5.1,
+   "who": "RES_b",
+   "do": "look",
+   "dur": 0.8,
+   "at": "chk"
+  },
+  {
+   "t": 5.3,
+   "who": "chk",
+   "do": "prog",
+   "dur": 3.2,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 8.7,
+   "who": "chk",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0.9
+  },
+  {
+   "t": 11.6,
+   "who": "bb1",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 12.9,
+   "who": "bb2",
+   "do": "appear",
+   "dur": 0.5
+  },
+  {
+   "t": 16.2,
+   "who": "brw",
+   "do": "prog",
+   "dur": 4.4,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 19.7,
+   "who": "SAMB",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 31.1,
+   "who": "SAMB",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 21.8,
+   "who": "SAMB",
+   "do": "arms",
+   "dur": 0.5,
+   "left": "carry",
+   "right": "carry"
+  },
+  {
+   "t": 21.8,
+   "who": "box_e",
+   "do": "attach",
+   "to": "SAMB.R"
+  },
+  {
+   "t": 21.9,
+   "who": "SAMB",
+   "do": "walk_to",
+   "dur": 3.3,
+   "to": [
+    19.1,
+    0.3
+   ]
+  },
+  {
+   "t": 19.7,
+   "who": "SAM",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 31.1,
+   "who": "SAM",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "SAM",
+   "do": "warp",
+   "to": [
+    22.919,
+    -0.077
+   ],
+   "yaw": -0.6,
+   "sit": 1
+  },
+  {
+   "t": 21.9,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 26.1,
+   "who": "bt0",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 26.3,
+   "who": "bt0",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 0.8
+  },
+  {
+   "t": 26.6,
+   "who": "bt1",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 26.8,
+   "who": "bt1",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 0.8
+  },
+  {
+   "t": 27.1,
+   "who": "bt2",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 27.3,
+   "who": "bt2",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 0.8
+  },
+  {
+   "t": 26.4,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.5,
+   "face": "wince"
+  },
+  {
+   "t": 26.7,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.5,
+   "left": "ears",
+   "right": "ears"
+  },
+  {
+   "t": 27.6,
+   "who": "RES_f",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 37.9,
+   "who": "RES_f",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 27.6,
+   "who": "PAR_f",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 37.9,
+   "who": "PAR_f",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "PAR_f",
+   "do": "warp",
+   "to": [
+    25.7,
+    0
+   ],
+   "yaw": 3.141592653589793,
+   "sit": 1
+  },
+  {
+   "t": 28.6,
+   "who": "PAR_f",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 29.8,
+   "who": "RES_f",
+   "do": "arms",
+   "dur": 0.6,
+   "right": "hold_front",
+   "left": "down"
+  },
+  {
+   "t": 29.8,
+   "who": "card_f",
+   "do": "attach",
+   "to": "RES_f.R"
+  },
+  {
+   "t": 30.1,
+   "who": "lab_2011",
+   "do": "prog",
+   "dur": 1.4,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 32.0,
+   "who": "card_f",
+   "do": "move",
+   "dur": 0.001,
+   "to": [
+    25.0,
+    0.84,
+    0.0
+   ]
+  },
+  {
+   "t": 32.0,
+   "who": "card_f",
+   "do": "detach"
+  },
+  {
+   "t": 32.0,
+   "who": "RES_f",
+   "do": "arms",
+   "dur": 0.6,
+   "right": "down"
+  },
+  {
+   "t": 32.6,
+   "who": "PAR_f",
+   "do": "look",
+   "dur": 0.6,
+   "at": "card_f"
+  },
+  {
+   "t": 34.4,
+   "who": "PAR_g",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 43.8,
+   "who": "PAR_g",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "PAR_g",
+   "do": "warp",
+   "to": [
+    30.25,
+    0
+   ],
+   "yaw": 0,
+   "sit": 1
+  },
+  {
+   "t": 35.4,
+   "who": "PAR_g",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 36.8,
+   "who": "PAR_g",
+   "do": "look",
+   "dur": 0.6,
+   "at": "book_g"
+  },
+  {
+   "t": 37.4,
+   "who": "pb0",
+   "do": "appear",
+   "dur": 0.3
+  },
+  {
+   "t": 37.4,
+   "who": "pb0",
+   "do": "move",
+   "dur": 1.2,
+   "to": [
+    29.560000000000002,
+    2.7,
+    0.3
+   ]
+  },
+  {
+   "t": 38.4,
+   "who": "pb0",
+   "do": "disappear",
+   "dur": 0.3
+  },
+  {
+   "t": 38.3,
+   "who": "pb1",
+   "do": "appear",
+   "dur": 0.3
+  },
+  {
+   "t": 38.3,
+   "who": "pb1",
+   "do": "move",
+   "dur": 1.2,
+   "to": [
+    29.96,
+    2.7,
+    0.3
+   ]
+  },
+  {
+   "t": 39.3,
+   "who": "pb1",
+   "do": "disappear",
+   "dur": 0.3
+  },
+  {
+   "t": 39.2,
+   "who": "pb2",
+   "do": "appear",
+   "dur": 0.3
+  },
+  {
+   "t": 39.2,
+   "who": "pb2",
+   "do": "move",
+   "dur": 1.2,
+   "to": [
+    30.36,
+    2.7,
+    0.3
+   ]
+  },
+  {
+   "t": 40.2,
+   "who": "pb2",
+   "do": "disappear",
+   "dur": 0.3
+  },
+  {
+   "t": 40.1,
+   "who": "pb3",
+   "do": "appear",
+   "dur": 0.3
+  },
+  {
+   "t": 40.1,
+   "who": "pb3",
+   "do": "move",
+   "dur": 1.2,
+   "to": [
+    29.92,
+    2.7,
+    0.3
+   ]
+  },
+  {
+   "t": 41.1,
+   "who": "pb3",
+   "do": "disappear",
+   "dur": 0.3
+  },
+  {
+   "t": 41.0,
+   "who": "pb4",
+   "do": "appear",
+   "dur": 0.3
+  },
+  {
+   "t": 41.0,
+   "who": "pb4",
+   "do": "move",
+   "dur": 1.2,
+   "to": [
+    30.32,
+    2.7,
+    0.3
+   ]
+  },
+  {
+   "t": 42.0,
+   "who": "pb4",
+   "do": "disappear",
+   "dur": 0.3
+  },
+  {
+   "t": 40.3,
+   "who": "PAR_h",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 47.8,
+   "who": "PAR_h",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "PAR_h",
+   "do": "warp",
+   "to": [
+    35.25,
+    0
+   ],
+   "yaw": 0,
+   "sit": 1
+  },
+  {
+   "t": 41.3,
+   "who": "PAR_h",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 42.7,
+   "who": "PAR_h",
+   "do": "look",
+   "dur": 0.5,
+   "at": "grd"
+  },
+  {
+   "t": 43.2,
+   "who": "dn",
+   "do": "appear",
+   "dur": 0.3
+  },
+  {
+   "t": 43.2,
+   "who": "dn",
+   "do": "move",
+   "dur": 2.5,
+   "to": [
+    37.4,
+    1.5,
+    0
+   ]
+  },
+  {
+   "t": 47.1,
+   "who": "eq",
+   "do": "prog",
+   "dur": 0.8,
+   "to": 1
+  },
+  {
+   "t": 47.7,
+   "who": "tab_i",
+   "do": "appear",
+   "dur": 0.5
+  },
+  {
+   "t": 49.4,
+   "who": "PAR_j",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 56.9,
+   "who": "PAR_j",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "PAR_j",
+   "do": "warp",
+   "to": [
+    45.619,
+    -0.077
+   ],
+   "yaw": -0.6,
+   "sit": 1
+  },
+  {
+   "t": 50.4,
+   "who": "PAR_j",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 51.9,
+   "who": "wt_j",
+   "do": "appear",
+   "dur": 0.5
+  },
+  {
+   "t": 52.0,
+   "who": "PAR_j",
+   "do": "slump",
+   "dur": 1.2,
+   "to": 0.5
+  },
+  {
+   "t": 55.9,
+   "who": "bars_k",
+   "do": "prog",
+   "dur": 2.4,
+   "to": 1
+  },
+  {
+   "t": 57.0,
+   "who": "tvi",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 58.3,
+   "who": "fi",
+   "do": "appear",
+   "dur": 0.4
+  },
+  {
+   "t": 56.6,
+   "who": "lab_530",
+   "do": "prog",
+   "dur": 1.6,
+   "to": 1,
+   "ease": "linear"
+  },
+  {
+   "t": 60.2,
+   "who": "INT1",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 71.6,
+   "who": "INT1",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 60.2,
+   "who": "INT2",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 71.6,
+   "who": "INT2",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "INT1",
+   "do": "warp",
+   "to": [
+    54.35,
+    0
+   ],
+   "yaw": 0,
+   "sit": 1
+  },
+  {
+   "t": 0.0,
+   "who": "INT2",
+   "do": "warp",
+   "to": [
+    55.65,
+    0
+   ],
+   "yaw": 3.141592653589793,
+   "sit": 1
+  },
+  {
+   "t": 61.2,
+   "who": "INT1",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 61.2,
+   "who": "INT2",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 63.2,
+   "who": "bb_l",
+   "do": "appear",
+   "dur": 0.5
+  },
+  {
+   "t": 62.7,
+   "who": "INT1",
+   "do": "nod",
+   "dur": 0.6
+  },
+  {
+   "t": 65.4,
+   "who": "INT1",
+   "do": "nod",
+   "dur": 0.6
+  },
+  {
+   "t": 68.1,
+   "who": "SAM_m",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 78.4,
+   "who": "SAM_m",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 0.0,
+   "who": "SAM_m",
+   "do": "warp",
+   "to": [
+    60.019,
+    -0.077
+   ],
+   "yaw": -0.6,
+   "sit": 1
+  },
+  {
+   "t": 69.1,
+   "who": "SAM_m",
+   "do": "arms",
+   "dur": 0.1,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 70.9,
+   "who": "SAM_m",
+   "do": "look",
+   "dur": 0.6,
+   "at": "sign_m"
+  },
+  {
+   "t": 74.9,
+   "who": "SAM_n",
+   "do": "show",
+   "dur": 0.01
+  },
+  {
+   "t": 84.3,
+   "who": "SAM_n",
+   "do": "hide",
+   "dur": 0.01
+  },
+  {
+   "t": 77.4,
+   "who": "SAM_n",
+   "do": "arms",
+   "dur": 0.8,
+   "right": "head",
+   "left": "down"
+  },
+  {
+   "t": 77.5,
+   "who": "SAM_n",
+   "do": "look",
+   "dur": 0.8,
+   "at": "tab_n"
+  },
+  {
+   "t": 0.01,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.01,
+   "who": "PAR_f",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.01,
+   "who": "PAR_j",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.01,
+   "who": "INT1",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.01,
+   "who": "INT2",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.01,
+   "who": "SAM_m",
+   "do": "arms",
+   "dur": 0.001,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 0.3,
+   "who": "q0",
+   "do": "scale",
+   "dur": 0.9,
+   "to": 0.0
+  },
+  {
+   "who": "CAMERA",
+   "do": "keys",
+   "keys": [
+    {
+     "t": 0,
+     "pos": {
+      "at": "q0",
+      "off": [
+       0,
+       0,
+       0.9
+      ]
+     },
+     "look": "q0",
+     "fov": 24,
+     "ap": 0
+    },
+    {
+     "t": 0.35,
+     "pos": {
+      "at": "q0",
+      "off": [
+       0,
+       0,
+       0.9
+      ]
+     },
+     "look": "q0",
+     "fov": 24,
+     "ap": 0
+    },
+    {
+     "t": 1.7,
+     "pos": [
+      -0.3,
+      1.6,
+      4.6
+     ],
+     "look": [
+      0.0,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 3.8,
+     "pos": [
+      0.7,
+      1.6,
+      4.6
+     ],
+     "look": [
+      0.4,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 4.8,
+     "pos": [
+      5.1,
+      1.6,
+      4.6
+     ],
+     "look": [
+      5.3999999999999995,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 10.6,
+     "pos": [
+      6.1,
+      1.6,
+      4.6
+     ],
+     "look": [
+      5.8,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 11.6,
+     "pos": [
+      9.9,
+      1.6,
+      4.6
+     ],
+     "look": [
+      10.200000000000001,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 14.9,
+     "pos": [
+      10.9,
+      1.6,
+      4.6
+     ],
+     "look": [
+      10.6,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 15.9,
+     "pos": [
+      14.5,
+      1.6,
+      4.6
+     ],
+     "look": [
+      14.8,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 21.2,
+     "pos": [
+      15.5,
+      1.6,
+      4.6
+     ],
+     "look": [
+      15.2,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 22.3,
+     "pos": [
+      18.0,
+      1.6,
+      4.3
+     ],
+     "look": [
+      18.5,
+      1.3,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 25.3,
+     "pos": [
+      19.2,
+      1.6,
+      4.3
+     ],
+     "look": [
+      19.4,
+      1.3,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 26.7,
+     "pos": [
+      22.0,
+      1.6,
+      4.5
+     ],
+     "look": [
+      22.3,
+      1.3,
+      0
+     ],
+     "fov": 34,
+     "ap": 8
+    },
+    {
+     "t": 29.1,
+     "pos": [
+      23.0,
+      1.6,
+      4.5
+     ],
+     "look": [
+      23.2,
+      1.3,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 30.1,
+     "pos": [
+      24.7,
+      1.6,
+      4.6
+     ],
+     "look": [
+      25.0,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 35.9,
+     "pos": [
+      25.7,
+      1.6,
+      4.6
+     ],
+     "look": [
+      25.4,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 36.9,
+     "pos": [
+      30.0,
+      1.6,
+      4.6
+     ],
+     "look": [
+      30.3,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 41.8,
+     "pos": [
+      31.0,
+      1.6,
+      4.6
+     ],
+     "look": [
+      30.7,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 42.8,
+     "pos": [
+      35.5,
+      1.6,
+      4.6
+     ],
+     "look": [
+      35.8,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 45.8,
+     "pos": [
+      36.5,
+      1.6,
+      4.6
+     ],
+     "look": [
+      36.2,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 46.8,
+     "pos": [
+      39.6,
+      1.6,
+      4.6
+     ],
+     "look": [
+      39.9,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 50.9,
+     "pos": [
+      40.6,
+      1.6,
+      4.6
+     ],
+     "look": [
+      40.300000000000004,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 51.9,
+     "pos": [
+      44.7,
+      1.6,
+      4.6
+     ],
+     "look": [
+      45.0,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 54.9,
+     "pos": [
+      45.7,
+      1.6,
+      4.6
+     ],
+     "look": [
+      45.400000000000006,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 55.9,
+     "pos": [
+      49.4,
+      1.6,
+      4.6
+     ],
+     "look": [
+      49.699999999999996,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 61.7,
+     "pos": [
+      50.4,
+      1.6,
+      4.6
+     ],
+     "look": [
+      50.1,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 62.7,
+     "pos": [
+      54.5,
+      1.6,
+      4.6
+     ],
+     "look": [
+      54.8,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 69.6,
+     "pos": [
+      55.5,
+      1.6,
+      4.6
+     ],
+     "look": [
+      55.2,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 70.6,
+     "pos": [
+      59.8,
+      1.6,
+      4.6
+     ],
+     "look": [
+      60.099999999999994,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 76.4,
+     "pos": [
+      60.8,
+      1.6,
+      4.6
+     ],
+     "look": [
+      60.5,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 77.4,
+     "pos": [
+      65.3,
+      1.6,
+      4.6
+     ],
+     "look": [
+      65.6,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 82.3,
+     "pos": [
+      66.3,
+      1.6,
+      4.6
+     ],
+     "look": [
+      66.0,
+      1.45,
+      0
+     ],
+     "fov": 34,
+     "ap": 6
+    }
+   ]
+  }
+ ],
+ "captions": [
+  {
+   "start": 0.0,
+   "end": 4.25,
+   "text": "There's an old idea in psychology called the *Zeigarnik* effect."
+  },
+  {
+   "start": 4.3,
+   "end": 11.05,
+   "text": "It's named after Bluma *Zeigarnik*, a psychologist who suggested that the mind doesn't like *unfinished* tasks."
+  },
+  {
+   "start": 11.1,
+   "end": 15.35,
+   "text": "People tend to remember *unfinished* things *better* than finished ones."
+  },
+  {
+   "start": 15.4,
+   "end": 21.65,
+   "text": "Think of a browser with too many *tabs* *open*. Each *unfinished* thing is a *tab*."
+  },
+  {
+   "start": 21.7,
+   "end": 29.55,
+   "text": "You don't see them while you're busy. But when you sit still, the quiet makes them easy to hear."
+  },
+  {
+   "start": 29.6,
+   "end": 36.35,
+   "text": "A *2011* study by Masicampo and Baumeister tested this. They gave people goals they hadn't finished."
+  },
+  {
+   "start": 36.4,
+   "end": 42.25,
+   "text": "Those goals kept popping up in their minds, even during an unrelated reading task."
+  },
+  {
+   "start": 42.3,
+   "end": 46.25,
+   "text": "People's performance on a word puzzle got worse too."
+  },
+  {
+   "start": 46.3,
+   "end": 51.35,
+   "text": "So the *mug* isn't really about the *mug*. It's an *open* *tab*."
+  },
+  {
+   "start": 51.4,
+   "end": 55.35,
+   "text": "There's a second layer. Guilt about leisure is common."
+  },
+  {
+   "start": 55.4,
+   "end": 62.15,
+   "text": "In a survey of 530 adults, people who watched less TV overall felt guiltier about binge-watching."
+  },
+  {
+   "start": 62.2,
+   "end": 70.05,
+   "text": "A recent European interview study found that people often feel their free time isn't meaningful enough, and *guilt* follows."
+  },
+  {
+   "start": 70.1,
+   "end": 76.85,
+   "text": "So Sam isn't broken. He's rested in a world that quietly says *rest* should be *earned*."
+  },
+  {
+   "start": 76.9,
+   "end": 82.75,
+   "text": "But then, what do you do with an *open* *tab* you can't close tonight?"
+  }
+ ]
+}

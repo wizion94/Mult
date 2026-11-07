@@ -1,0 +1,770 @@
+{
+ "meta": {
+  "title": "The Mug Can Wait",
+  "scene": "s1",
+  "duration": 34,
+  "fade_in": 0,
+  "fade_out": 0
+ },
+ "set": {
+  "props": [
+   {
+    "type": "ground",
+    "z0": -2.6,
+    "z1": 9
+   },
+   {
+    "type": "wall",
+    "at": [
+     0,
+     0,
+     -3
+    ]
+   },
+   {
+    "type": "couch",
+    "id": "couch",
+    "at": [
+     0,
+     -0.5
+    ],
+    "yaw": -0.6
+   },
+   {
+    "type": "tv",
+    "id": "tv",
+    "at": [
+     5.2,
+     2.5
+    ],
+    "yaw": 2.541592653589793
+   },
+   {
+    "type": "counter",
+    "id": "counter",
+    "at": [
+     0.9,
+     0,
+     -2.62
+    ],
+    "sink": true,
+    "sinkX": -0.55
+   },
+   {
+    "type": "mug",
+    "id": "mug",
+    "at": [
+     1.0,
+     0.95,
+     -2.62
+    ],
+    "alarm": true,
+    "shake": "rot",
+    "rayY": 0.42
+   },
+   {
+    "type": "side_table",
+    "id": "table",
+    "at": [
+     1.7,
+     0.95
+    ]
+   },
+   {
+    "type": "phone",
+    "id": "phone",
+    "at": [
+     1.7,
+     0.6,
+     0.95
+    ],
+    "alarm": true,
+    "shake": "buzz",
+    "rayY": 0.35
+   },
+   {
+    "type": "door",
+    "id": "door",
+    "at": [
+     3.3,
+     0,
+     -2.97
+    ]
+   },
+   {
+    "type": "box",
+    "id": "box",
+    "at": [
+     3.3,
+     0,
+     -2.45
+    ],
+    "alarm": true,
+    "shake": "hop",
+    "rayY": 0.55
+   },
+   {
+    "type": "clock",
+    "id": "clock",
+    "at": [
+     -2.4,
+     2.1,
+     -2.96
+    ],
+    "time": "9:40"
+   },
+   {
+    "type": "remote",
+    "id": "remote",
+    "at": [
+     -0.07,
+     0.47,
+     -0.185
+    ],
+    "yaw": -0.19999999999999996,
+    "holdOff": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "cloud",
+    "id": "cloud",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "hidden": true,
+    "follow": {
+     "at": "SAM.head",
+     "off": [
+      0,
+      0.55,
+      0
+     ]
+    }
+   },
+   {
+    "type": "group",
+    "id": "diagram",
+    "at": [
+     0.62,
+     2.45,
+     -0.08
+    ],
+    "hidden": true,
+    "children": [
+     {
+      "type": "label",
+      "at": [
+       -1.05,
+       0,
+       0
+      ],
+      "text": "?",
+      "size": 1.0,
+      "color": "#7fa8d8",
+      "reveal": false
+     },
+     {
+      "type": "arrow",
+      "at": [
+       -0.5,
+       0,
+       0
+      ],
+      "len": 1.0
+     },
+     {
+      "type": "bulb",
+      "at": [
+       1.15,
+       0,
+       0
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "actors": {
+  "SAM": {
+   "at": [
+    -1.4,
+    0.9
+   ],
+   "yaw": -0.5,
+   "face": "happy"
+  }
+ },
+ "timeline": [
+  {
+   "t": 0,
+   "who": "SAM",
+   "do": "emote",
+   "face": "happy"
+  },
+  {
+   "t": 0.3,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.9,
+   "right": "wave_up",
+   "left": "down"
+  },
+  {
+   "t": 0.8,
+   "who": "SAM",
+   "do": "look",
+   "dur": 1.0,
+   "at": "clock"
+  },
+  {
+   "t": 2.4,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.8,
+   "at": null
+  },
+  {
+   "t": 2.6,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.8,
+   "right": "point_up",
+   "left": "open"
+  },
+  {
+   "t": 4.3,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.6,
+   "right": "down",
+   "left": "down"
+  },
+  {
+   "t": 4.8,
+   "who": "SAM",
+   "do": "walk_to",
+   "dur": 2.4,
+   "to": [
+    1.0,
+    1.7
+   ]
+  },
+  {
+   "t": 7.2,
+   "who": "SAM",
+   "do": "walk_to",
+   "dur": 1.6,
+   "to": [
+    1.15,
+    -0.25
+   ]
+  },
+  {
+   "t": 8.6,
+   "who": "SAM",
+   "do": "turn",
+   "dur": 1.0,
+   "yaw": -0.6
+  },
+  {
+   "t": 9.4,
+   "who": "SAM",
+   "do": "walk_to",
+   "dur": 0.5,
+   "to": [
+    0.62,
+    -0.08
+   ],
+   "face": -0.6
+  },
+  {
+   "t": 7.0,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.8,
+   "face": "calm"
+  },
+  {
+   "t": 10.1,
+   "who": "SAM",
+   "do": "sit",
+   "dur": 1.2
+  },
+  {
+   "t": 10.3,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.7,
+   "left": "rest",
+   "right": "rest"
+  },
+  {
+   "t": 11.0,
+   "who": "SAM",
+   "do": "reach",
+   "dur": 0.5,
+   "at": "remote"
+  },
+  {
+   "t": 11.5,
+   "who": "remote",
+   "do": "attach",
+   "to": "SAM.R"
+  },
+  {
+   "t": 11.52,
+   "who": "SAM",
+   "do": "unreach",
+   "dur": 0.4
+  },
+  {
+   "t": 11.52,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.4,
+   "right": "hold_front"
+  },
+  {
+   "t": 12.2,
+   "who": "mug",
+   "do": "alarm",
+   "dur": 0.5,
+   "to": 1
+  },
+  {
+   "t": 12.1,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.5,
+   "face": "worry"
+  },
+  {
+   "t": 12.4,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.8,
+   "at": "mug"
+  },
+  {
+   "t": 17.4,
+   "who": "mug",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0.5
+  },
+  {
+   "t": 17.5,
+   "who": "phone",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 1
+  },
+  {
+   "t": 17.8,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": "phone"
+  },
+  {
+   "t": 19.3,
+   "who": "box",
+   "do": "alarm",
+   "dur": 0.4,
+   "to": 1
+  },
+  {
+   "t": 19.5,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.8,
+   "at": "box"
+  },
+  {
+   "t": 22.3,
+   "who": "mug",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0
+  },
+  {
+   "t": 22.3,
+   "who": "phone",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0
+  },
+  {
+   "t": 22.3,
+   "who": "box",
+   "do": "alarm",
+   "dur": 0.8,
+   "to": 0
+  },
+  {
+   "t": 22.3,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.6,
+   "face": "guilty"
+  },
+  {
+   "t": 22.4,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.7,
+   "at": null
+  },
+  {
+   "t": 22.4,
+   "who": "SAM",
+   "do": "slump",
+   "dur": 1.5,
+   "to": 1
+  },
+  {
+   "t": 22.5,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 1.0,
+   "left": "limp",
+   "right": "limp"
+  },
+  {
+   "t": 23.0,
+   "who": "cloud",
+   "do": "appear",
+   "dur": 1.8,
+   "to": 0.8
+  },
+  {
+   "t": 27.6,
+   "who": "cloud",
+   "do": "disappear",
+   "dur": 0.9
+  },
+  {
+   "t": 27.9,
+   "who": "SAM",
+   "do": "reach",
+   "dur": 0.35,
+   "pos": [
+    -0.07,
+    0.47,
+    -0.185
+   ]
+  },
+  {
+   "t": 28.25,
+   "who": "remote",
+   "do": "detach"
+  },
+  {
+   "t": 28.3,
+   "who": "SAM",
+   "do": "unreach",
+   "dur": 0.3
+  },
+  {
+   "t": 28.3,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.3,
+   "right": "rest"
+  },
+  {
+   "t": 27.9,
+   "who": "SAM",
+   "do": "emote",
+   "dur": 0.8,
+   "face": "curious"
+  },
+  {
+   "t": 27.9,
+   "who": "SAM",
+   "do": "slump",
+   "dur": 0.8,
+   "to": 0
+  },
+  {
+   "t": 28.7,
+   "who": "SAM",
+   "do": "stand_up",
+   "dur": 1.2
+  },
+  {
+   "t": 28.6,
+   "who": "diagram",
+   "do": "appear",
+   "dur": 0.9
+  },
+  {
+   "t": 29.9,
+   "who": "SAM",
+   "do": "look",
+   "dur": 0.9,
+   "at": "diagram"
+  },
+  {
+   "t": 30.3,
+   "who": "SAM",
+   "do": "arms",
+   "dur": 0.9,
+   "right": "point_up",
+   "left": "down"
+  },
+  {
+   "who": "CAMERA",
+   "do": "keys",
+   "keys": [
+    {
+     "t": 0,
+     "pos": [
+      -0.2,
+      1.5,
+      6.2
+     ],
+     "look": [
+      0,
+      1,
+      0
+     ],
+     "fov": 34,
+     "ap": 0
+    },
+    {
+     "t": 5,
+     "pos": [
+      0.6,
+      1.5,
+      6.0
+     ],
+     "look": [
+      0.7,
+      1,
+      0.2
+     ],
+     "fov": 34,
+     "ap": 0
+    },
+    {
+     "t": 9,
+     "pos": [
+      1.9,
+      1.4,
+      4.9
+     ],
+     "look": [
+      0.7,
+      0.95,
+      -0.1
+     ],
+     "fov": 32,
+     "ap": 6
+    },
+    {
+     "t": 11.8,
+     "pos": [
+      1.7,
+      1.25,
+      3.8
+     ],
+     "look": [
+      0.2,
+      0.95,
+      -0.3
+     ],
+     "fov": 32,
+     "ap": 10
+    },
+    {
+     "t": 13.5,
+     "pos": [
+      1.3,
+      1.3,
+      3.9
+     ],
+     "look": [
+      0.7,
+      1.1,
+      -1.0
+     ],
+     "fov": 30,
+     "ap": 12
+    },
+    {
+     "t": 16.5,
+     "pos": [
+      1.5,
+      1.3,
+      4.3
+     ],
+     "look": [
+      0.8,
+      1.1,
+      -1.2
+     ],
+     "fov": 30,
+     "ap": 10
+    },
+    {
+     "t": 18.5,
+     "pos": [
+      2.4,
+      1.6,
+      5.0
+     ],
+     "look": [
+      1.4,
+      0.95,
+      -0.6
+     ],
+     "fov": 36,
+     "ap": 4
+    },
+    {
+     "t": 21.5,
+     "pos": [
+      2.6,
+      1.6,
+      5.2
+     ],
+     "look": [
+      1.5,
+      0.95,
+      -0.6
+     ],
+     "fov": 36,
+     "ap": 4
+    },
+    {
+     "t": 24.5,
+     "pos": [
+      2.3,
+      1.3,
+      4.0
+     ],
+     "look": [
+      0.3,
+      0.95,
+      -0.2
+     ],
+     "fov": 32,
+     "ap": 10
+    },
+    {
+     "t": 27.4,
+     "pos": [
+      1.9,
+      1.2,
+      2.4
+     ],
+     "look": [
+      0.0,
+      1.1,
+      -0.5
+     ],
+     "fov": 30,
+     "ap": 18
+    },
+    {
+     "t": 29.5,
+     "pos": [
+      1.2,
+      1.4,
+      5.0
+     ],
+     "look": [
+      0.7,
+      1.3,
+      -0.2
+     ],
+     "fov": 34,
+     "ap": 6
+    },
+    {
+     "t": 32.6,
+     "pos": [
+      1.0,
+      1.5,
+      5.8
+     ],
+     "look": [
+      0.7,
+      1.4,
+      -0.2
+     ],
+     "fov": 34,
+     "ap": 0
+    },
+    {
+     "t": 33.55,
+     "pos": [
+      1.0,
+      1.3,
+      0.2
+     ],
+     "look": [
+      1.0,
+      1.0,
+      -2.62
+     ],
+     "fov": 30,
+     "ap": 4
+    },
+    {
+     "t": 34.0,
+     "pos": [
+      1.05,
+      1.12,
+      -2.1
+     ],
+     "look": [
+      1.0,
+      1.0,
+      -2.62
+     ],
+     "fov": 24,
+     "ap": 14
+    }
+   ]
+  }
+ ],
+ "captions": [
+  {
+   "start": 0.0,
+   "end": 7.05,
+   "text": "It's 9:40 p.m. Sam has been waiting for this all day. One episode. That's the whole *plan*."
+  },
+  {
+   "start": 7.1,
+   "end": 11.85,
+   "text": "He sits down on the couch. He picks up the remote."
+  },
+  {
+   "start": 11.9,
+   "end": 17.35,
+   "text": "And from the kitchen, a dirty *mug* starts to feel like an *emergency*."
+  },
+  {
+   "start": 17.4,
+   "end": 22.15,
+   "text": "Then the unread message. Then the package by the front door."
+  },
+  {
+   "start": 22.2,
+   "end": 27.65,
+   "text": "If you've ever felt *guilty* for doing absolutely *nothing*, this one's for you."
+  },
+  {
+   "start": 27.7,
+   "end": 33.95,
+   "text": "By the end, you'll know why it happens, and what to do about it tonight."
+  }
+ ]
+}
