@@ -9,7 +9,7 @@ props=room([
  P('phone','phone',[1.7,0.6,0.95],alarm=True,shake='buzz',rayY=0.35),
  P('door','door',[3.3,0,-2.97]),
  P('box','box',[3.3,0,-2.45],alarm=True,shake='hop',rayY=0.55),
- P('clock','clock',[-2.4,2.1,-2.96],time='9:40'),
+ P('clock','clock',[-3.2,2.15,-2.96],time='9:40'),
  P('remote','remote',[-0.07,0.47,-0.185],yaw=C+0.4,holdOff=[0,0,0]),
  P('cloud','cloud',[0,0,0],hidden=True,follow={"at":"SAM.head","off":[0,0.55,0]}),
  P('group','diagram',[0.62,2.45,-0.08],hidden=True,children=[
