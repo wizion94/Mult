@@ -51,7 +51,7 @@ function character(kind, o) {
   const skin = o.skin || (kind === 'kid' ? '#f6cf47' : '#e9b087'), shirt = o.shirt || (kind === 'kid' ? '#6a2fe0' : '#2db3a0'), pants = kind === 'kid' ? '#2b2f6e' : '#3b4a8f';
   ctx.save(); ctx.translate(o.x, o.y + bob); ctx.rotate((o.rot || 0) * Math.PI / 180);
   if (o.body !== false) {
-    if (o.legs) { const lo = [o.ll || 0, o.lr || 0]; [-1, 1].forEach((d, i) => { const yo = lo[i] * k; block((d < 0 ? -100 : 0) * k, 290 * k + yo, 100 * k, 200 * k, 14 * k, pants); block(d * 50 * k - 50 * k, 450 * k + yo, 100 * k, 40 * k, 10 * k, '#f2f2f7'); }); }
+    if (o.legs) { const lo = [o.ll || 0, o.lr || 0], LH = o.sit ? 120 : 200; [-1, 1].forEach((d, i) => { const yo = lo[i] * k; block((d < 0 ? -100 : 0) * k, 290 * k + yo, 100 * k, LH * k, 14 * k, pants); block(d * 50 * k - 50 * k + (o.sit ? d * 14 * k : 0), (250 + LH) * k + yo, 100 * k, 40 * k, 10 * k, '#f2f2f7'); }); }
     // torso
     block(-100 * k, 92 * k, 200 * k, 200 * k, 18 * k, shirt);
     ctx.save(); ctx.beginPath(); ctx.roundRect(-100 * k, 92 * k, 200 * k, 200 * k, 18 * k); ctx.clip();
@@ -239,29 +239,30 @@ function frozenCard(t, t0, t1) { if (t < t0 || t > t1) return; const u = pop(t, 
 function endText(t) { if (t < 44.7) return; const k = pop(t, 44.7, 0.3); ctx.save(); ctx.translate(W / 2, 1450); ctx.scale(k, k); outlined("Type 'PIZZA' letter by", 0, -60, 70, '#fff', 18); outlined('letter in comments if your', 0, 20, 70, '#fff', 18); outlined('microwave does this!', 0, 100, 78, C.yellow, 18); ctx.restore(); }
 
 // ---- shots
-const MOMX = 300, KIDX = 330;
-function seat(t, o) { monitor(t, {x: 760, y: 1010, s: 0.9, screen: 'game'}); keyboard(t, 420, 1500, 1); }
+const MOMX = 300, KIDX = 300, MY = 850;
+function chairBack(x, y, s) { block(x - 130 * s, y - 20 * s, 260 * s, 420 * s, 30 * s, '#2a1f44', 8); }
+function seat(t, o) { monitor(t, {x: 790, y: 1010, s: 0.8, screen: 'game'}); keyboard(t, 700, 1390, 0.6); }
 const SHOTS = [
  {t0: 0, t1: 2.85, draw(t, u) { cam(1.0, 1.1, u, 540, 960, 0, t); room(t); seat(t); const mx = lerp(1500, 830, E.back(clamp(u * 2.2)));
-    character('mom', {x: mx, y: 780, s: 1.05, face: 'shock', look: [-0.8, 0.2], t, ph: 1.7, open: talkOpen('mom', t), armL: -25, armR: 25}); character('kid', {x: KIDX, y: 1000, s: 1.45, face: 'shock', look: [0.8, -0.2], t, armL: 30, armR: -30}); hand(250, 1560, 1.2, -8); hand(480, 1585, 1.2, 8); } },
- {t0: 2.85, t1: 4.4, draw(t, u) { cam(1.2, 1.45, u, 460, 880, 0, t); room(t); character('mom', {x: 900, y: 760, s: 1.0, face: 'smirk', look: [-1, 0.2], t, open: 0}); character('kid', {x: 440, y: 900, s: 1.8, face: speaking('hero', t) ? 'panic' : 'sad', look: [0, 0.5], t, sweat: 4, open: talkOpen('hero', t), armL: 40, armR: -40}); } },
+    chairBack(KIDX, 1000, 1.0); character('kid', {x: KIDX, y: 930, s: 1.0, legs: true, sit: true, face: 'shock', look: [0.8, -0.2], t, armL: 30, armR: -30}); character('mom', {x: mx, y: 850, s: 1.0, legs: true, ll: Math.max(0, Math.sin(t * 9)) * -50 * (1 - clamp(u * 2.2)), lr: Math.max(0, -Math.sin(t * 9)) * -50 * (1 - clamp(u * 2.2)), face: 'shock', look: [-0.8, 0.2], t, ph: 1.7, open: talkOpen('mom', t), armL: -25, armR: 25}); } },
+ {t0: 2.85, t1: 4.4, draw(t, u) { cam(1.0, 1.12, u, 540, 960, 0, t); room(t); character('mom', {x: 900, y: 850, s: 1.0, legs: true, face: 'smirk', look: [-1, 0.2], t, open: 0}); chairBack(440, 960, 1.25); character('kid', {x: 440, y: 820, s: 1.25, legs: true, sit: true, face: speaking('hero', t) ? 'panic' : 'sad', look: [0, 0.5], t, sweat: 4, open: talkOpen('hero', t), armL: 40, armR: -40}); } },
  {t0: 4.4, t1: 9.0, draw(t, u) { cam(1.0, 1.08, u, 540, 960, 0, t); kitchen(t); const slide = E.io(clamp((t - 5.0) / 0.5)), reach = E.io(clamp((t - 4.8) / 0.4)), press = t > 6.2 && t < 8.2 && Math.floor(t * 4) % 2 === 0;
     const state = t < 5.0 ? 'idle' : t < 5.8 ? 'open' : t < 8.2 ? 'loaded' : 'run'; microwave(t, {x: 740, y: 1000, s: 0.95, state, secs: 30, press});
-    character('mom', {x: MOMX, y: 760, s: 1.0, face: speaking('mom', t) ? 'smirk' : 'focus', look: [0.7, 0.1], t, open: talkOpen('mom', t), armL: 8, armR: -90 * reach}); const k = 1.7, hx = MOMX + 150 * k + 220 * k * 0.95, hy = 760 + 100 * k;
+    character('mom', {x: MOMX, y: MY, s: 1.0, legs: true, face: speaking('mom', t) ? 'smirk' : 'focus', look: [0.7, 0.1], t, open: talkOpen('mom', t), armL: 8, armR: -90 * reach}); const k = 1.7, hx = MOMX + 150 * k + 220 * k * 0.95, hy = MY + 100 * k;
     if (t < 5.7) pizza(lerp(hx, 680, slide), lerp(hy - 30, 1060, slide), 1.05 - 0.2 * slide); if (t > 6.1 && t < 8.3) ripple(740 + 48, 1000 - 8, ((t - 6.1) * 3) % 1); } },
  {t0: 9.0, t1: 15.5, draw(t, u) { const p = obbyPath(sm01(t, 9.0, 15.5) * 6.5); const camX = p.x - 360; obbyBG(t, camX); obbyWorld(t, camX, {hat: true}); heroAt(t, p, {face: speaking('hero', t) ? 'shock' : 'grin', open: talkOpen('hero', t)}); } },
  {t0: 15.5, t1: 17.5, draw(t, u) { const p = obbyPath(6.5 + (t - 15.5) * 0.75); const camX = p.x - 360; obbyBG(t, camX); obbyWorld(t, camX, {hat: false}); speedLines(t, 540, 900, 24, '#ffffff', 0.3); heroAt(t, p, {face: 'panic', sweat: 2}); } },
- {t0: 17.5, t1: 23.5, draw(t, u) { cam(1.0, 1.1, u, 560, 960, 0, t); room(t); seat(t); const push = t > 21.6, away = E.out(clamp((t - 21.9) / 0.9));
-    character('kid', {x: KIDX, y: 1000, s: 1.45, face: t < 20.2 ? 'curious' : 'smirk', look: [0.8, 0], t, open: talkOpen('hero', t), armL: 20, armR: push ? -100 : -20});
-    const bx = lerp(760, 1500, away), by = lerp(900, 500, away); character('kid', {x: bx, y: by, s: 1.1, shirt: '#2fa86a', hair: '#2b2b4a', logo: 'B', nophones: true, skin: '#f6d2b0', face: away > 0 ? 'shock' : (speaking('bro', t) ? 'grin' : 'smirk'), t, open: talkOpen('bro', t), rot: away * 600 + Math.sin(t * 8) * 2, armL: 150, armR: -150 + Math.sin(t * 9) * 15}); } },
+ {t0: 17.5, t1: 23.5, draw(t, u) { cam(1.0, 1.06, u, 560, 960, 0, t); room(t); seat(t); const push = t > 21.6, away = E.out(clamp((t - 21.9) / 0.9));
+    chairBack(KIDX, 1000, 1.0); character('kid', {x: KIDX, y: 930, s: 1.0, legs: true, sit: true, face: t < 20.2 ? 'curious' : 'smirk', look: [0.8, 0], t, open: talkOpen('hero', t), armL: 20, armR: push ? -100 : -20});
+    const bx = lerp(760, 1500, away), by = lerp(900, 500, away); character('kid', {x: bx, y: by, s: 0.85, legs: true, ll: away ? -40 : 0, lr: away ? 30 : 0, shirt: '#2fa86a', hair: '#2b2b4a', logo: 'B', nophones: true, skin: '#f6d2b0', face: away > 0 ? 'shock' : (speaking('bro', t) ? 'grin' : 'smirk'), t, open: talkOpen('bro', t), rot: away * 600 + Math.sin(t * 8) * 2, armL: 150, armR: -150 + Math.sin(t * 9) * 15}); } },
  {t0: 23.5, t1: 32.8, draw(t, u) { const arrive = t > 30.2; const p = arrive ? {x: PXW(NP - 1) - 100, y: PTOP(NP - 1), air: 0} : obbyPath(8 + sm01(t, 23.5, 30.2) * (NP - 1 - 8)); const camX = arrive ? PXW(NP - 1) - 340 : p.x - 360; obbyBG(t, camX); obbyWorld(t, camX, {chest: true, chestOpen: sm01(t, 30.4, 30.8)});
     if (arrive) { character('kid', {x: 360 + (PXW(NP - 1) - 100 - (PXW(NP - 1) - 340 + 360)) , y: PTOP(NP - 1) - 490 * 0.935, s: 0.55, legs: true, t, face: speaking('hero', t) ? 'grin' : 'joy', open: talkOpen('hero', t), armL: 160, armR: -160, rot: Math.sin(t * 9) * 3}); } else heroAt(t, p, {face: 'grin'}); } },
  {t0: 32.8, t1: 38.2, draw(t, u) { cam(1.0, 1.06, u, 540, 960, 0, t); kitchen(t); const take = E.io(clamp((t - 33.1) / 0.5)), ouch = t >= 34.7, state = t < 33.0 ? 'done' : t < 33.5 ? 'open' : 'idle'; microwave(t, {x: 740, y: 1000, s: 0.95, state, secs: 0});
-    character('mom', {x: MOMX, y: 760, s: 1.0, face: t < 34.2 ? 'focus' : (ouch ? (speaking('mom', t) ? 'shock' : 'panic') : 'curious'), look: [0.7, 0.1], t, open: talkOpen('mom', t), armL: 8, armR: ouch ? -80 + Math.sin(t * 30) * 14 : -90 * (1 - take * 0.3), rot: ouch ? Math.sin(t * 25) * 2 : 0}); const k = 1.7, hx = MOMX + 150 * k + 220 * k * 0.95;
-    if (t > 33.0) pizza(lerp(680, hx - 120, take), lerp(1060, 760 + 100 * k - 40, take), 1.05, 0, t > 35.6); } },
+    character('mom', {x: MOMX, y: MY, s: 1.0, legs: true, face: t < 34.2 ? 'focus' : (ouch ? (speaking('mom', t) ? 'shock' : 'panic') : 'curious'), look: [0.7, 0.1], t, open: talkOpen('mom', t), armL: 8, armR: ouch ? -80 + Math.sin(t * 30) * 14 : -90 * (1 - take * 0.3), rot: ouch ? Math.sin(t * 25) * 2 : 0}); const k = 1.7, hx = MOMX + 150 * k + 220 * k * 0.95;
+    if (t > 33.0) pizza(lerp(680, hx - 120, take), lerp(1060, MY + 100 * k - 40, take), 1.05, 0, t > 35.6); } },
  {t0: 38.2, t1: 41.0, draw(t, u) { cam(1.0, 1.06, u, 540, 960, 0, t); kitchen(t); const back = E.io(clamp((t - 38.3) / 0.4)), k = 1.7, hx = MOMX + 150 * k + 220 * k * 0.95; microwave(t, {x: 740, y: 1000, s: 0.95, state: t < 39.0 ? 'open' : 'run', secs: t < 39.0 ? 0 : 120, press: t > 38.6 && t < 39.0});
-    character('mom', {x: MOMX, y: 760, s: 1.0, face: speaking('mom', t) ? 'smirk' : 'focus', look: [0.7, 0.1], t, open: talkOpen('mom', t), armL: 8, armR: -90}); if (t < 39.0) pizza(lerp(hx - 120, 680, back), lerp(760 + 100 * k - 40, 1060, back), 1.05); } },
- {t0: 41.0, t1: 47.5, draw(t, u) { cam(1.3, 1.45, u, 470, 880, 0, t); room(t); character('kid', {x: 470, y: 900, s: 1.8, face: speaking('hero', t) ? 'grin' : 'smirk', look: [0.2, 0.1], t, open: talkOpen('hero', t), armL: 40, armR: -20}); } }
+    character('mom', {x: MOMX, y: MY, s: 1.0, legs: true, face: speaking('mom', t) ? 'smirk' : 'focus', look: [0.7, 0.1], t, open: talkOpen('mom', t), armL: 8, armR: -90}); if (t < 39.0) pizza(lerp(hx - 120, 680, back), lerp(MY + 100 * k - 40, 1060, back), 1.05); } },
+ {t0: 41.0, t1: 47.5, draw(t, u) { cam(1.0, 1.08, u, 540, 960, 0, t); room(t); chairBack(470, 1000, 1.3); character('kid', {x: 470, y: 840, s: 1.3, legs: true, sit: true, face: speaking('hero', t) ? 'grin' : 'smirk', look: [0.2, 0.1], t, open: talkOpen('hero', t), armL: 40, armR: -20}); } }
 ];
 function frame(t) {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H);
