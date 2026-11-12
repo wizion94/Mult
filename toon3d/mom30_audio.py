@@ -81,7 +81,8 @@ while t < DUR:
         if sec == 'tense': add(mus, t + b * beat, decay(noise(0.06, 0.5), 40) * 0.6, gain)
     t += 4 * beat; bar += 1
 
-mix = sfx * 0.9 + mus + talk
+import os
+mix = sfx * 0.9 + mus + (0 if os.environ.get("NOBLIPS") else talk)
 mix[int(DUR * SR):] = 0
 fade = np.minimum(1, np.maximum(0, (DUR - np.arange(N) / SR) / 0.8)); mix *= fade
 mix = np.tanh(mix * 1.2) * 0.9

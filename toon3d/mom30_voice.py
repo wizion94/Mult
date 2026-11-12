@@ -30,7 +30,8 @@ tmp = tempfile.mkdtemp(); inputs = ['-i', video, '-i', sfx]; filt = []; labels =
 labels = ['[sfx]']; filt.append('[1:a]volume=0.8[sfx]')
 for i, L in enumerate(D['lines']):
     mp3 = f'{tmp}/{L["id"]}.mp3'; tts(L['text'], VOICES[L['who']], mp3, key)
-    slot = L['t1'] - L['t0'] + 0.35; d = dur(mp3); tempo = min(1.6, max(1.0, d / slot))
+    nxt = D['lines'][i + 1]['t0'] if i + 1 < len(D['lines']) else 1e9
+    slot = min(L['t1'] - L['t0'] + 0.35, nxt - L['t0'] - 0.05); d = dur(mp3); tempo = min(1.6, max(1.0, d / slot))
     inputs += ['-i', mp3]; ms = int(L['t0'] * 1000)
     filt.append(f'[{i + 2}:a]atempo={tempo:.3f},adelay={ms}|{ms},volume=1.6[v{i}]'); labels.append(f'[v{i}]')
     print(L['id'], f'{d:.2f}s -> tempo {tempo:.2f}')
