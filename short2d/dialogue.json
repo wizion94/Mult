@@ -1,0 +1,15 @@
+{
+ "duration": 47.5,
+ "lines": [
+  {"id":"m1","who":"mom","t0":0.25,"t1":2.8,"text":"Get off Roblox right now, or I'm deleting your account!"},
+  {"id":"h1","who":"hero","t0":2.85,"t1":4.4,"text":"Mom, please, just 1 minute! Just 1 minute!"},
+  {"id":"m2","who":"mom","t0":4.6,"t1":8.6,"text":"Fine. You can play ONLY while my pizza warms up. You have 30 SECONDS!"},
+  {"id":"h2","who":"hero","t0":9.3,"t1":13.4,"text":"I need to beat this stage to get the free Valkyrie hat! Faster, faster!"},
+  {"id":"b1","who":"bro","t0":17.8,"t1":20.0,"text":"Give me your Robux or I tell Mom!"},
+  {"id":"h3","who":"hero","t0":20.3,"t1":22.2,"text":"Not now, bro, move away!"},
+  {"id":"h4","who":"hero","t0":29.6,"t1":31.7,"text":"I made it! I got the reward!"},
+  {"id":"m3","who":"mom","t0":33.7,"t1":37.4,"text":"Ouch! The crust is hot, but the inside is FROZEN ICE!"},
+  {"id":"m4","who":"mom","t0":39.0,"t1":40.6,"text":"Two more minutes!"},
+  {"id":"h5","who":"hero","t0":41.6,"t1":44.6,"text":"Thanks mom, time to buy the whole catalog!"}
+ ]
+}
